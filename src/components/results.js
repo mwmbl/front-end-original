@@ -10,17 +10,15 @@ export default define('results', class extends HTMLElement {
   constructor() {
     super();
     const shadow = this.attachShadow({ mode: 'open' });
-    this.#setup(shadow);
+    this.__setup(shadow);
   }
 
-  async #setup(shadow) {
-    // DOM Template
+  async __setup(shadow) {
     shadow.innerHTML = template({ data: this.dataset });
-
-    this.#events();
+    this.__events();
   }
 
-  #events() {
+  __events() {
     globalBus.on('search', (e) => {
       this.shadowRoot.querySelector('.results').innerHTML = '';
       for(const resultData of e.detail) {
@@ -28,15 +26,15 @@ export default define('results', class extends HTMLElement {
           <li 
             is='${result}' 
             data-url='${resultData.url}'
-            data-title='${this.#handleBold(resultData.title)}'
-            data-extract='${this.#handleBold(resultData.extract)}'
+            data-title='${this.__handleBold(resultData.title)}'
+            data-extract='${this.__handleBold(resultData.extract)}'
           ></li>
         `;
       }
     });
   }
 
-  #handleBold(input) {
+  __handleBold(input) {
     let text = '';
     for (const part of input) {
       if (part.is_bold) text += `<strong>${part.value}</strong>`;

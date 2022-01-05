@@ -1,8 +1,9 @@
 import config from '../../config.js';
 
-/** Define a web component
+/** Define a web component, this is a wrapper
+ *  around the `customElements.define` native function.
  * @function define 
- * @param {string} name
+ * @param {string} name Name of the component (will be prefixed by the config `componentPrefix`)
  * @param {CustomElementConstructor} constructor
  * @param {ElementDefinitionOptions} [options]
  * @returns {string} Returns the element name ready for the DOM (.e.g `<search-bar></search-bar>`)

@@ -8,6 +8,5 @@
 
 export default {
   componentPrefix: 'mwmbl',
-  // publicApiURL: 'https://tinysearchengine-oq4r5q2hsq-ue.a.run.app/',
-  publicApiURL: 'http://localhost:8080/',
+  publicApiURL: 'https://tinysearchengine-oq4r5q2hsq-ue.a.run.app/',
 }

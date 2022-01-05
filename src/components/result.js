@@ -1,6 +1,4 @@
 import define from '../utils/define.js';
-import config from '../../config.js';
-import { globalBus } from '../utils/events.js';
 
 const template = ({ data }) => /*html*/`
 <a href='${data.url}' class='result'>
@@ -13,11 +11,10 @@ const template = ({ data }) => /*html*/`
 export default define('result', class extends HTMLLIElement {
   constructor() {
     super();
-    this.#setup();
+    this.__setup();
   }
 
-  async #setup() {
-    // DOM Template
+  async __setup() {
     this.innerHTML = template({ data: this.dataset });
   }
 }, { extends: 'li' });
