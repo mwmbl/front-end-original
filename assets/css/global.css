@@ -1,0 +1,17 @@
+.search-menu {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 10px;
+  border-bottom: 1px solid var(--light-color);
+}
+
+.search-bar {
+  background-color: var(--gray-color);
+  border: none;
+  padding: 15px;
+  border-radius: 10px;
+  outline: none;
+  font-size: var(--default-font-size);
+  width: 100%;
+}

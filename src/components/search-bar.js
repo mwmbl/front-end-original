@@ -4,23 +4,22 @@ import config from '../../config.js';
 import { globalBus } from '../utils/events.js';
 
 const template = ({ data }) => /*html*/`
-  <input type='search' class='text-input'>
+  <input type='search' class='search-bar'>
 `;
 
 export default define('search-bar', class extends HTMLElement {
   constructor() {
     super();
-    const shadow = this.attachShadow({ mode: 'open' });
-    this.__setup(shadow);
+    this.__setup();
   }
 
-  async __setup(shadow) {
-    shadow.innerHTML = template({ data: this.dataset });
+  async __setup() {
+    this.innerHTML = template({ data: this.dataset });
     this.__events();
   }
 
   __events() {
-    const searchInput = this.shadowRoot.querySelector('input');
+    const searchInput = this.querySelector('input');
     searchInput.addEventListener('input', debounce(async (e) => {
       // Getting results from API
       const search = await (await fetch(`${config.publicApiURL}search?s=${searchInput.value}`)).json();
