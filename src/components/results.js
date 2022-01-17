@@ -36,13 +36,14 @@ export default define('results', class extends HTMLElement {
         `;
       }
       else if (e.detail.length > 0) {
+        console.log(e)
         for(const resultData of e.detail) {
           this.querySelector('.results').innerHTML += /*html*/`
             <li 
               is='${result}' 
-              data-url='${resultData.url}'
-              data-title='${this.__handleBold(resultData.title)}'
-              data-extract='${this.__handleBold(resultData.extract)}'
+              data-url='${this.__escapeString(resultData.url)}'
+              data-title='${this.__escapeString(this.__handleBold(resultData.title))}'
+              data-extract='${this.__escapeString(this.__handleBold(resultData.extract))}'
             ></li>
           `;
         }
@@ -63,6 +64,13 @@ export default define('results', class extends HTMLElement {
       if (part.is_bold) text += `<strong>${part.value}</strong>`;
       else text += part.value;
     }
+    console.log(text)
     return text;
+  }
+
+  __escapeString(input) {
+    return input
+      .replace(/\"/g,'&#34;')
+      .replace(/\'/g,'&#39;')
   }
 });
