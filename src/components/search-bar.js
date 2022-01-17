@@ -4,7 +4,7 @@ import config from '../../config.js';
 import { globalBus } from '../utils/events.js';
 
 const template = ({ data }) => /*html*/`
-  <input type='search' class='search-bar'>
+  <input type='search' class='search-bar' placeholder="Search on mwmbl...">
 `;
 
 export default define('search-bar', class extends HTMLElement {
@@ -25,7 +25,7 @@ export default define('search-bar', class extends HTMLElement {
       const search = await (await fetch(`${config.publicApiURL}search?s=${searchInput.value}`)).json();
       // Creating a custom event to send search results
       const searchEvent = new CustomEvent('search', {
-        detail: search,
+        detail: searchInput.value ? search : null,
       });
       // Dispatch search event throught the global event bus
       globalBus.dispatch(searchEvent);

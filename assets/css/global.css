@@ -1,9 +1,28 @@
+body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+
+.brand-title {
+  text-align: center;
+  font-weight: 900;
+  margin: 0 15px 10px 15px;
+}
+
 .search-menu {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  max-width: 800px;
+  margin: 0 auto;
   width: 100%;
   padding: 10px;
-  border-bottom: 1px solid var(--light-color);
+}
+
+mwmbl-search-bar {
+  width: 100%;
 }
 
 .search-bar {
@@ -14,4 +33,59 @@
   outline: none;
   font-size: var(--default-font-size);
   width: 100%;
+}
+
+mwmbl-results {
+  display: block;
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.results {
+  max-width: 100%;
+  list-style-type: none;
+  padding: 25px;
+  margin: 0 10px;
+  border-radius: 15px;
+  background-color: var(--light-color);
+}
+
+.result:not(:first-child) {
+  margin: 25px 0;
+}
+
+.result a {
+  text-decoration: none;
+  color: var(--dark-color);
+}
+
+.result .link {
+  font-size: .9rem;
+}
+
+.result .title, .result .title>* {
+  color: var(--primary-color);
+  font-size: 1.1rem;
+}
+
+.result .extract {
+  opacity: .8;
+  font-size: .9;
+}
+
+.empty-result {
+  text-align: center;
+  opacity: 0.5;
+  font-weight: var(--bold-font-weight);
+}
+
+@media screen and (min-width:576px) {
+  .brand-title {
+    margin: 0 25px 0 15px;
+  }
+
+  .search-menu {
+    flex-direction: row;
+  }
 }

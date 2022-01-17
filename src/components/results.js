@@ -3,34 +3,58 @@ import { globalBus } from '../utils/events.js';
 import result from './result.js';
 
 const template = () => /*html*/`
-  <ul class='results'></ul>
+  <ul class='results'>
+    <li class="empty-result">
+      Welcome to mwmbl, the free, open-source and non-profit search engine.
+      <br> 
+      You can start searching by using the search bar above!
+    </li>
+  </ul>
 `;
 
 export default define('results', class extends HTMLElement {
   constructor() {
     super();
-    const shadow = this.attachShadow({ mode: 'open' });
-    this.__setup(shadow);
+    this.__setup();
   }
 
-  async __setup(shadow) {
-    shadow.innerHTML = template({ data: this.dataset });
+  async __setup() {
+    this.innerHTML = template({ data: this.dataset });
     this.__events();
   }
 
   __events() {
     globalBus.on('search', (e) => {
-      this.shadowRoot.querySelector('.results').innerHTML = '';
-      for(const resultData of e.detail) {
-        this.shadowRoot.querySelector('.results').innerHTML += /*html*/`
-          <li 
-            is='${result}' 
-            data-url='${resultData.url}'
-            data-title='${this.__handleBold(resultData.title)}'
-            data-extract='${this.__handleBold(resultData.extract)}'
-          ></li>
+      this.querySelector('.results').innerHTML = '';
+      if (!e.detail) {
+        this.querySelector('.results').innerHTML = /*html*/`
+          <li class="empty-result">
+            Welcome to mwmbl, the free, open-source and non-profit search engine.
+            <br> 
+            You can start searching by using the search bar above!
+          </li>
         `;
       }
+      else if (e.detail.length > 0) {
+        for(const resultData of e.detail) {
+          this.querySelector('.results').innerHTML += /*html*/`
+            <li 
+              is='${result}' 
+              data-url='${resultData.url}'
+              data-title='${this.__handleBold(resultData.title)}'
+              data-extract='${this.__handleBold(resultData.extract)}'
+            ></li>
+          `;
+        }
+      }
+      else {
+        this.querySelector('.results').innerHTML = /*html*/`
+          <li 
+            class="empty-result"
+          >We could not find anything for your search...</li>
+        `;
+      }
+      
     });
   }
 

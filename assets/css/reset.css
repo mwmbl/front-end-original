@@ -5,6 +5,7 @@
 *, *::before, *::after {
   box-sizing: border-box;
   font-family: var(--regular-font);
+  color: var(--dark-color);
 }
 * {
   margin: 0;
