@@ -29,6 +29,8 @@ export default define('search-bar', class extends HTMLElement {
       });
       // Dispatch search event throught the global event bus
       globalBus.dispatch(searchEvent);
+
+      document.title = `MWMBL - ${searchInput.value || "Search"}`;
     }));
   }
 });

@@ -54,7 +54,6 @@ export default define('results', class extends HTMLElement {
           >We could not find anything for your search...</li>
         `;
       }
-      
     });
   }
 
