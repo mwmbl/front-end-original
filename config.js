@@ -9,4 +9,5 @@
 export default {
   componentPrefix: 'mwmbl',
   publicApiURL: 'https://tinysearchengine-oq4r5q2hsq-ue.a.run.app/',
+  searchQueryParam: 'q'
 }

@@ -31,8 +31,8 @@ export default define('search-bar', class extends HTMLElement {
       // Update query params
       const queryParams = new URLSearchParams(document.location.search);
       // Sets query param if search value is not empty
-      if (this.searchInput.value) queryParams.set('q', this.searchInput.value);
-      else queryParams.delete('q');
+      if (this.searchInput.value) queryParams.set(config.searchQueryParam, this.searchInput.value);
+      else queryParams.delete(config.searchQueryParam);
       // New URL with query params
       const newURL = 
         document.location.protocol 
@@ -42,7 +42,7 @@ export default define('search-bar', class extends HTMLElement {
         + (this.searchInput.value ? '?' : '')
         + queryParams.toString();
       // Replace history state
-      window.history.replaceState({ path: newURL }, '', newURL);
+      window.history.pushState({ path: newURL }, '', newURL);
 
       // Update body padding if search value is empty
       if (this.searchInput.value) document.body.style.paddingTop = '25px';
@@ -79,7 +79,7 @@ export default define('search-bar', class extends HTMLElement {
     // Focus search input when component is connected
     this.searchInput.focus();
 
-    const searchQuery = new URLSearchParams(document.location.search).get('q');
+    const searchQuery = new URLSearchParams(document.location.search).get(config.searchQueryParam);
     this.searchInput.value = searchQuery;
     this.searchInput.dispatchEvent(new Event('input'));
   }
