@@ -25,6 +25,11 @@ export default define('search-bar', class extends HTMLElement {
 
   __events() {
     this.searchInput.addEventListener('input', debounce(async (e) => {
+      // Update page title on search input
+      document.title = `MWMBL - ${this.searchInput.value || "Search"}`;
+      // Update body padding if search value is empty
+      if (this.searchInput.value) document.body.style.paddingTop = '25px';
+      else document.body.style.paddingTop = '30vh';
       // Getting results from API
       const search = await (await fetch(`${config.publicApiURL}search?s=${this.searchInput.value}`)).json();
       // Creating a custom event to send search results
@@ -33,13 +38,6 @@ export default define('search-bar', class extends HTMLElement {
       });
       // Dispatch search event throught the global event bus
       globalBus.dispatch(searchEvent);
-
-      // Update page title on search input
-      document.title = `MWMBL - ${this.searchInput.value || "Search"}`;
-
-      // Update body padding if search value is empty
-      if (this.searchInput.value) document.body.style.paddingTop = '25px';
-      else document.body.style.paddingTop = '30vh';
     }));
   }
 
