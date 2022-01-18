@@ -4,7 +4,7 @@ body {
   overflow-y: scroll;
   background-color: var(--light-color);
   height: fit-content;
-  padding-top: 300px;
+  padding-top: 30vh;
   transition: padding 300ms ease;
 }
 

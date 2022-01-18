@@ -39,7 +39,7 @@ export default define('search-bar', class extends HTMLElement {
 
       // Update body padding if search value is empty
       if (this.searchInput.value) document.body.style.paddingTop = '25px';
-      else document.body.style.paddingTop = '300px';
+      else document.body.style.paddingTop = '30vh';
     }));
   }
 
