@@ -15,7 +15,23 @@ export default define('result', class extends HTMLLIElement {
     this.__setup();
   }
 
-  async __setup() {
+  __setup() {
     this.innerHTML = template({ data: this.dataset });
+    this.__events();
+  }
+
+  __events() {
+    this.addEventListener('keydown', (e) => {
+      if (this.firstElementChild === document.activeElement) {
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          this?.nextElementSibling?.firstElementChild.focus();
+        }
+        if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          this?.previousElementSibling?.firstElementChild.focus();
+        }
+      }
+    })
   }
 }, { extends: 'li' });

@@ -15,19 +15,22 @@ const template = () => /*html*/`
 export default define('results', class extends HTMLElement {
   constructor() {
     super();
+    this.results = null;
     this.__setup();
   }
 
-  async __setup() {
+  __setup() {
     this.innerHTML = template({ data: this.dataset });
+    this.results = this.querySelector('.results');
     this.__events();
   }
 
   __events() {
     globalBus.on('search', (e) => {
-      this.querySelector('.results').innerHTML = '';
+      this.results.innerHTML = '';
+      // If there is no details the input is empty 
       if (!e.detail) {
-        this.querySelector('.results').innerHTML = /*html*/`
+        this.results.innerHTML = /*html*/`
           <li class="empty-result">
             Welcome to mwmbl, the free, open-source and non-profit search engine.
             <br> 
@@ -35,11 +38,11 @@ export default define('results', class extends HTMLElement {
           </li>
         `;
       }
+      // If the details array has results display them
       else if (e.detail.length > 0) {
-        console.log(e)
         for(const resultData of e.detail) {
-          this.querySelector('.results').innerHTML += /*html*/`
-            <li 
+          this.results.innerHTML += /*html*/`
+            <li
               is='${result}' 
               data-url='${this.__escapeString(resultData.url)}'
               data-title='${this.__escapeString(this.__handleBold(resultData.title))}'
@@ -48,14 +51,20 @@ export default define('results', class extends HTMLElement {
           `;
         }
       }
+      // If the details array is empty there is no result
       else {
-        this.querySelector('.results').innerHTML = /*html*/`
+        this.results.innerHTML = /*html*/`
           <li 
             class="empty-result"
           >We could not find anything for your search...</li>
         `;
       }
     });
+
+    // Focus first element when coming from the search bar
+    globalBus.on('focus-result', () => {
+      this.results.firstElementChild.firstElementChild.focus();
+    })
   }
 
   __handleBold(input) {
@@ -64,7 +73,6 @@ export default define('results', class extends HTMLElement {
       if (part.is_bold) text += `<strong>${part.value}</strong>`;
       else text += part.value;
     }
-    console.log(text)
     return text;
   }
 

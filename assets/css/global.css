@@ -83,11 +83,19 @@ mwmbl-results {
   color: var(--dark-color);
   padding: 15px;
   border-radius: 10px;
-  transition: background-color 200ms ease-in-out;
+  outline: 3px solid transparent;
+  outline-offset: 3px;
+  transition: 
+    background-color 200ms ease-in-out,
+    outline 100ms ease-in-out;
 }
 
-.result:hover a {
+.result:hover a, .result a:focus {
   background-color: var(--gray-color);
+}
+
+.result a:focus {
+  outline: 3px solid var(--primary-color);
 }
 
 .result .link {

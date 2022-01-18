@@ -6,7 +6,7 @@ import { globalBus } from '../utils/events.js';
 const template = ({ data }) => /*html*/`
   <div class="search-bar">
     <i class="ph-magnifying-glass-bold"></i>
-    <input type='search' class='search-bar-input' placeholder="Search on mwmbl...">
+    <input type='search' class='search-bar-input' placeholder='Search on mwmbl...' title='Use "CTRL+K" or "/" to focus.'>
   </div>
 `;
 
@@ -17,7 +17,7 @@ export default define('search-bar', class extends HTMLElement {
     this.__setup();
   }
 
-  async __setup() {
+  __setup() {
     this.innerHTML = template({ data: this.dataset });
     this.searchInput = this.querySelector('input');
     this.__events();
@@ -39,6 +39,23 @@ export default define('search-bar', class extends HTMLElement {
       // Dispatch search event throught the global event bus
       globalBus.dispatch(searchEvent);
     }));
+
+    // Focus search bar when pressing `ctrl + k` or `/`
+    document.addEventListener('keydown', (e) => {
+      if ((e.key === 'k' && e.ctrlKey) || e.key === '/') {
+        e.preventDefault();
+        this.searchInput.focus();
+      }
+    });
+
+    // Focus first result when pressing down arrow
+    this.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown' && this.searchInput.value) {
+        e.preventDefault();
+        const focusResultEvent = new CustomEvent('focus-result');
+        globalBus.dispatch(focusResultEvent);
+      }
+    })
   }
 
   connectedCallback() {
