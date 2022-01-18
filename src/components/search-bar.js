@@ -42,7 +42,7 @@ export default define('search-bar', class extends HTMLElement {
         + (this.searchInput.value ? '?' : '')
         + queryParams.toString();
       // Replace history state
-      window.history.pushState({ path: newURL }, '', newURL);
+      window.history.replaceState({ path: newURL }, '', newURL);
 
       // Update body padding if search value is empty
       if (this.searchInput.value) document.body.style.paddingTop = '25px';
