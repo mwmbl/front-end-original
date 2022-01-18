@@ -25,8 +25,25 @@ export default define('search-bar', class extends HTMLElement {
 
   __events() {
     this.searchInput.addEventListener('input', debounce(async (e) => {
-      // Update page title on search input
+      // Update page title
       document.title = `MWMBL - ${this.searchInput.value || "Search"}`;
+
+      // Update query params
+      const queryParams = new URLSearchParams(document.location.search);
+      // Sets query param if search value is not empty
+      if (this.searchInput.value) queryParams.set('q', this.searchInput.value);
+      else queryParams.delete('q');
+      // New URL with query params
+      const newURL = 
+        document.location.protocol 
+        + "//" 
+        + document.location.host 
+        + document.location.pathname 
+        + (this.searchInput.value ? '?' : '')
+        + queryParams.toString();
+      // Replace history state
+      window.history.replaceState({ path: newURL }, '', newURL);
+
       // Update body padding if search value is empty
       if (this.searchInput.value) document.body.style.paddingTop = '25px';
       else document.body.style.paddingTop = '30vh';
@@ -61,5 +78,9 @@ export default define('search-bar', class extends HTMLElement {
   connectedCallback() {
     // Focus search input when component is connected
     this.searchInput.focus();
+
+    const searchQuery = new URLSearchParams(document.location.search).get('q');
+    this.searchInput.value = searchQuery;
+    this.searchInput.dispatchEvent(new Event('input'));
   }
 });
