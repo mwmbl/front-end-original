@@ -10,27 +10,33 @@ const template = ({ data }) => /*html*/`
 export default define('search-bar', class extends HTMLElement {
   constructor() {
     super();
+    this.searchInput = null;
     this.__setup();
   }
 
   async __setup() {
     this.innerHTML = template({ data: this.dataset });
+    this.searchInput = this.querySelector('input');
     this.__events();
   }
 
   __events() {
-    const searchInput = this.querySelector('input');
-    searchInput.addEventListener('input', debounce(async (e) => {
+    this.searchInput.addEventListener('input', debounce(async (e) => {
       // Getting results from API
-      const search = await (await fetch(`${config.publicApiURL}search?s=${searchInput.value}`)).json();
+      const search = await (await fetch(`${config.publicApiURL}search?s=${this.searchInput.value}`)).json();
       // Creating a custom event to send search results
       const searchEvent = new CustomEvent('search', {
-        detail: searchInput.value ? search : null,
+        detail: this.searchInput.value ? search : null,
       });
       // Dispatch search event throught the global event bus
       globalBus.dispatch(searchEvent);
 
-      document.title = `MWMBL - ${searchInput.value || "Search"}`;
+      document.title = `MWMBL - ${this.searchInput.value || "Search"}`;
     }));
+  }
+
+  connectedCallback() {
+    // Focus search input when component is connected
+    this.searchInput.focus();
   }
 });

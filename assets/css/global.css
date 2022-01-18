@@ -3,6 +3,7 @@ body {
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
+  background-color: var(--light-color);
 }
 
 .brand-title {
@@ -45,19 +46,23 @@ mwmbl-results {
 .results {
   max-width: 100%;
   list-style-type: none;
-  padding: 25px;
-  margin: 0 10px;
-  border-radius: 15px;
-  background-color: var(--light-color);
-}
-
-.result:not(:first-child) {
-  margin: 25px 0;
+  padding: 10px;
+  /* margin: 0 10px; */
+  /* border-radius: 15px; */
+  /* background-color: var(--light-color); */
 }
 
 .result a {
+  display: block;
   text-decoration: none;
   color: var(--dark-color);
+  padding: 15px;
+  border-radius: 10px;
+  transition: background-color 200ms ease-in-out;
+}
+
+.result:hover a {
+  background-color: var(--gray-color);
 }
 
 .result .link {
