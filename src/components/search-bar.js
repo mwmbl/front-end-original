@@ -4,7 +4,10 @@ import config from '../../config.js';
 import { globalBus } from '../utils/events.js';
 
 const template = ({ data }) => /*html*/`
-  <input type='search' class='search-bar' placeholder="Search on mwmbl...">
+  <div class="search-bar">
+    <i class="ph-magnifying-glass-bold"></i>
+    <input type='search' class='search-bar-input' placeholder="Search on mwmbl...">
+  </div>
 `;
 
 export default define('search-bar', class extends HTMLElement {
@@ -31,7 +34,12 @@ export default define('search-bar', class extends HTMLElement {
       // Dispatch search event throught the global event bus
       globalBus.dispatch(searchEvent);
 
+      // Update page title on search input
       document.title = `MWMBL - ${this.searchInput.value || "Search"}`;
+
+      // Update body padding if search value is empty
+      if (this.searchInput.value) document.body.style.paddingTop = '25px';
+      else document.body.style.paddingTop = '300px';
     }));
   }
 

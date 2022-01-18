@@ -1,9 +1,11 @@
 body {
-  height: 100vh;
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
   background-color: var(--light-color);
+  height: fit-content;
+  padding-top: 300px;
+  transition: padding 300ms ease;
 }
 
 .brand-title {
@@ -13,6 +15,8 @@ body {
 }
 
 .search-menu {
+  position: sticky;
+  top: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,6 +24,8 @@ body {
   margin: 0 auto;
   width: 100%;
   padding: 10px;
+  background-color: rgba(248, 248, 248, .9);
+  z-index: 10;
 }
 
 mwmbl-search-bar {
@@ -27,13 +33,33 @@ mwmbl-search-bar {
 }
 
 .search-bar {
+  position: relative;
+}
+
+.search-bar-input {
   background-color: var(--gray-color);
   border: none;
-  padding: 15px;
+  padding: 15px 15px 15px 50px;
   border-radius: 10px;
   outline: none;
   font-size: var(--default-font-size);
   width: 100%;
+  font-weight: var(--bold-font-weight);
+}
+
+.search-bar-input::placeholder {
+  color: var(--dark-color);
+  opacity: .3;
+}
+
+.search-bar i {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  color: var(--dark-color);
+  opacity: .3;
+  font-size: 1.5rem;
 }
 
 mwmbl-results {
@@ -47,9 +73,6 @@ mwmbl-results {
   max-width: 100%;
   list-style-type: none;
   padding: 10px;
-  /* margin: 0 10px; */
-  /* border-radius: 15px; */
-  /* background-color: var(--light-color); */
 }
 
 .result a {
@@ -81,7 +104,7 @@ mwmbl-results {
 
 .empty-result {
   text-align: center;
-  opacity: 0.5;
+  opacity: .5;
   font-weight: var(--bold-font-weight);
 }
 
