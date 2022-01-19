@@ -1,4 +1,5 @@
 import define from '../utils/define.js';
+import { globalBus } from '../utils/events.js';
 
 const template = ({ data }) => /*html*/`
 <a href='${data.url}'>
@@ -29,7 +30,12 @@ export default define('result', class extends HTMLLIElement {
         }
         if (e.key === 'ArrowUp') {
           e.preventDefault();
-          this?.previousElementSibling?.firstElementChild.focus();
+          if (this.previousElementSibling)
+            this.previousElementSibling?.firstElementChild.focus();
+          else {
+            const focusSearchEvent = new CustomEvent('focus-search');
+            globalBus.dispatch(focusSearchEvent);
+          }
         }
       }
     })

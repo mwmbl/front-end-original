@@ -59,7 +59,7 @@ export default define('search-bar', class extends HTMLElement {
 
     // Focus search bar when pressing `ctrl + k` or `/`
     document.addEventListener('keydown', (e) => {
-      if ((e.key === 'k' && e.ctrlKey) || e.key === '/') {
+      if ((e.key === 'k' && e.ctrlKey) || e.key === '/' || e.key === 'Escape') {
         e.preventDefault();
         this.searchInput.focus();
       }
@@ -72,7 +72,11 @@ export default define('search-bar', class extends HTMLElement {
         const focusResultEvent = new CustomEvent('focus-result');
         globalBus.dispatch(focusResultEvent);
       }
-    })
+    });
+
+    globalBus.on('focus-search', (e) => {
+      this.searchInput.focus();
+    });
   }
 
   connectedCallback() {
