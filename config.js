@@ -9,5 +9,17 @@
 export default {
   componentPrefix: 'mwmbl',
   publicApiURL: 'https://api.search.mwmbl.org/',
-  searchQueryParam: 'q'
+  searchQueryParam: 'q',
+  footerLinks: [
+    {
+      name: 'Github',
+      icon: 'ph-github-logo-bold',
+      href: 'https://github.com/mwmbl/mwmbl'
+    },
+    {
+      name: 'Wiki',
+      icon: 'ph-info-bold',
+      href: 'https://github.com/mwmbl/mwmbl/wiki'
+    }
+  ]
 }
