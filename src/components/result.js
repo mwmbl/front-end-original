@@ -2,11 +2,11 @@ import define from '../utils/define.js';
 import { globalBus } from '../utils/events.js';
 
 const template = ({ data }) => /*html*/`
-<a href='${data.url}'>
-  <p class='link'>${data.url}</p>
-  <p class='title'>${data.title}</p>
-  <p class='extract'>${data.extract}</p>
-</a>
+  <a href='${data.url}'>
+    <p class='link'>${data.url}</p>
+    <p class='title'>${data.title}</p>
+    <p class='extract'>${data.extract}</p>
+  </a>
 `;
 
 export default define('result', class extends HTMLLIElement {

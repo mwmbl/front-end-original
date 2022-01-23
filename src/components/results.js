@@ -1,14 +1,14 @@
 import define from '../utils/define.js';
 import { globalBus } from '../utils/events.js';
+
+// Components
 import result from './result.js';
+import emptyResult from './empty-result.js';
+import home from './home.js';
 
 const template = () => /*html*/`
   <ul class='results'>
-    <li class="empty-result">
-      Welcome to mwmbl, the free, open-source and non-profit search engine.
-      <br> 
-      You can start searching by using the search bar above!
-    </li>
+    <li is='${home}'></li>
   </ul>
 `;
 
@@ -20,7 +20,7 @@ export default define('results', class extends HTMLElement {
   }
 
   __setup() {
-    this.innerHTML = template({ data: this.dataset });
+    this.innerHTML = template();
     this.results = this.querySelector('.results');
     this.__events();
   }
@@ -31,11 +31,7 @@ export default define('results', class extends HTMLElement {
       // If there is no details the input is empty 
       if (!e.detail) {
         this.results.innerHTML = /*html*/`
-          <li class="empty-result">
-            Welcome to mwmbl, the free, open-source and non-profit search engine.
-            <br> 
-            You can start searching by using the search bar above!
-          </li>
+          <li is='${home}'></li>
         `;
       }
       // If the details array has results display them
@@ -54,9 +50,7 @@ export default define('results', class extends HTMLElement {
       // If the details array is empty there is no result
       else {
         this.results.innerHTML = /*html*/`
-          <li 
-            class="empty-result"
-          >We could not find anything for your search...</li>
+          <li is='${emptyResult}'></li>
         `;
       }
     });
