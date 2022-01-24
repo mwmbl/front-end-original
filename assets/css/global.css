@@ -47,11 +47,18 @@ mwmbl-search-bar {
   font-size: var(--default-font-size);
   width: 100%;
   font-weight: var(--bold-font-weight);
+  box-shadow: 0 0 0 0 var(--primary-color);
+  transition:
+    box-shadow 200ms ease-in-out;
 }
 
 .search-bar-input::placeholder {
   color: var(--dark-color);
   opacity: .3;
+}
+
+.search-bar-input:focus {
+  box-shadow: 0 0 0 0.2rem var(--primary-color);
 }
 
 .search-bar i {
