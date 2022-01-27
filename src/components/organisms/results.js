@@ -1,9 +1,9 @@
-import define from '../utils/define.js';
-import { globalBus } from '../utils/events.js';
+import define from '../../utils/define.js';
+import { globalBus } from '../../utils/events.js';
 
 // Components
-import result from './result.js';
-import emptyResult from './empty-result.js';
+import result from '../molecules/result.js';
+import emptyResult from '../molecules/empty-result.js';
 import home from './home.js';
 
 const template = () => /*html*/`

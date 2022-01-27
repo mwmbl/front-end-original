@@ -1,5 +1,5 @@
-import define from '../utils/define.js';
-import { globalBus } from '../utils/events.js';
+import define from '../../utils/define.js';
+import { globalBus } from '../../utils/events.js';
 
 const template = ({ data }) => /*html*/`
   <a href='${data.url}'>

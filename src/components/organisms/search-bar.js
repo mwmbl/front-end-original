@@ -1,7 +1,7 @@
-import define from '../utils/define.js';
-import debounce from '../utils/debounce.js';
-import config from '../../config.js';
-import { globalBus } from '../utils/events.js';
+import define from '../../utils/define.js';
+import debounce from '../../utils/debounce.js';
+import config from '../../../config.js';
+import { globalBus } from '../../utils/events.js';
 
 const template = () => /*html*/`
   <div class="search-bar">
