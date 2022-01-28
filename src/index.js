@@ -6,6 +6,6 @@
  * util or component files instead.
  */
 
-import searchBar from "./components/search-bar.js";
-import results from "./components/results.js";
-import footer from "./components/footer.js";
+import searchBar from "./components/organisms/search-bar.js";
+import results from "./components/organisms/results.js";
+import footer from "./components/organisms/footer.js";

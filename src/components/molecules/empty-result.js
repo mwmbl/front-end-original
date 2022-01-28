@@ -1,5 +1,4 @@
-import define from '../utils/define.js';
-import { globalBus } from '../utils/events.js';
+import define from '../../utils/define.js';
 
 const template = () => /*html*/`
   <p>We could not find anything for your search...</p>

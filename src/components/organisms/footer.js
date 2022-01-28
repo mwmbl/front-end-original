@@ -1,5 +1,5 @@
-import define from '../utils/define.js';
-import config from '../../config.js';
+import define from '../../utils/define.js';
+import config from '../../../config.js';
 
 const template = ({ data }) => /*html*/`
   <p class="footer-text">Find more on</p>
