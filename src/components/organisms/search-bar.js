@@ -44,17 +44,51 @@ export default define('search-bar', class extends HTMLElement {
       // Replace history state
       window.history.replaceState({ path: newURL }, '', newURL);
 
-      // Update body padding if search value is empty
-      if (this.searchInput.value) document.body.style.paddingTop = '25px';
-      else document.body.style.paddingTop = '30vh';
-      // Getting results from API
-      const search = await (await fetch(`${config.publicApiURL}search?s=${encodeURIComponent(this.searchInput.value)}`)).json();
-      // Creating a custom event to send search results
-      const searchEvent = new CustomEvent('search', {
-        detail: this.searchInput.value ? search : null,
-      });
-      // Dispatch search event throught the global event bus
-      globalBus.dispatch(searchEvent);
+      if (this.searchInput.value) {
+        // Update body padding
+        document.body.style.paddingTop = '25px';
+
+        try {
+          // Get response from API
+          const response = await fetch(`${config.publicApiURL}search?s=${encodeURIComponent(this.searchInput.value)}`);
+          // Getting results from API
+          const search = await (response).json();
+          // Creating a custom event to send search results
+          const searchEvent = new CustomEvent('search', {
+            detail: {
+              results: this.searchInput.value ? search : null,
+              error: null,
+            },
+          });
+          // Dispatch search event throught the global event bus
+          globalBus.dispatch(searchEvent);
+        }
+        catch(error) {
+          // Creating a custom event to send error
+          const searchEvent = new CustomEvent('search', {
+            detail: {
+              results: null,
+              error
+            },
+          });
+          // Dispatch search event throught the global event bus
+          globalBus.dispatch(searchEvent);
+        }
+      }
+      else {
+        // Update body padding
+        document.body.style.paddingTop = '30vh';
+        
+        // Creating a custom event to send empty search value
+        const searchEvent = new CustomEvent('search', {
+          detail: {
+            results: null,
+            error: null,
+          },
+        });
+        // Dispatch search event throught the global event bus
+        globalBus.dispatch(searchEvent);
+      }
     }));
 
     // Focus search bar when pressing `ctrl + k` or `/`
