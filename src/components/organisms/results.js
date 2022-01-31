@@ -41,9 +41,9 @@ export default define('results', class extends HTMLElement {
             this.results.innerHTML += /*html*/`
               <li
                 is='${result}' 
-                data-url='${this.__escapeString(resultData.url)}'
-                data-title='${this.__escapeString(this.__handleBold(resultData.title))}'
-                data-extract='${this.__escapeString(this.__handleBold(resultData.extract))}'
+                data-url='${resultData.url}'
+                data-title='${this.__handleBold(resultData.title)}'
+                data-extract='${this.__handleBold(resultData.extract)}'
               ></li>
             `;
           }
@@ -77,11 +77,5 @@ export default define('results', class extends HTMLElement {
       else text += part.value;
     }
     return text;
-  }
-
-  __escapeString(input) {
-    return input
-      .replace(/\"/g,'&#34;')
-      .replace(/\'/g,'&#39;')
   }
 });
