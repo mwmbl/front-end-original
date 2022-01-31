@@ -28,31 +28,40 @@ export default define('results', class extends HTMLElement {
   __events() {
     globalBus.on('search', (e) => {
       this.results.innerHTML = '';
-      // If there is no details the input is empty 
-      if (!e.detail) {
-        this.results.innerHTML = /*html*/`
-          <li is='${home}'></li>
-        `;
-      }
-      // If the details array has results display them
-      else if (e.detail.length > 0) {
-        for(const resultData of e.detail) {
-          this.results.innerHTML += /*html*/`
-            <li
-              is='${result}' 
-              data-url='${this.__escapeString(resultData.url)}'
-              data-title='${this.__escapeString(this.__handleBold(resultData.title))}'
-              data-extract='${this.__escapeString(this.__handleBold(resultData.extract))}'
-            ></li>
+      if (!e.detail.error) {
+        // If there is no details the input is empty 
+        if (!e.detail.results) {
+          this.results.innerHTML = /*html*/`
+            <li is='${home}'></li>
+          `;
+        }
+        // If the details array has results display them
+        else if (e.detail.results.length > 0) {
+          for(const resultData of e.detail.results) {
+            this.results.innerHTML += /*html*/`
+              <li
+                is='${result}' 
+                data-url='${this.__escapeString(resultData.url)}'
+                data-title='${this.__escapeString(this.__handleBold(resultData.title))}'
+                data-extract='${this.__escapeString(this.__handleBold(resultData.extract))}'
+              ></li>
+            `;
+          }
+        }
+        // If the details array is empty there is no result
+        else {
+          this.results.innerHTML = /*html*/`
+            <li is='${emptyResult}'></li>
           `;
         }
       }
-      // If the details array is empty there is no result
       else {
+        // If there is an error display an empty result
         this.results.innerHTML = /*html*/`
           <li is='${emptyResult}'></li>
         `;
       }
+      
     });
 
     // Focus first element when coming from the search bar
