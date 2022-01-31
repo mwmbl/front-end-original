@@ -5,6 +5,7 @@ import { globalBus } from '../../utils/events.js';
 import result from '../molecules/result.js';
 import emptyResult from '../molecules/empty-result.js';
 import home from './home.js';
+import escapeString from '../../utils/escapeString.js';
 
 const template = () => /*html*/`
   <ul class='results'>
@@ -41,9 +42,9 @@ export default define('results', class extends HTMLElement {
             this.results.innerHTML += /*html*/`
               <li
                 is='${result}' 
-                data-url='${resultData.url}'
-                data-title='${this.__handleBold(resultData.title)}'
-                data-extract='${this.__handleBold(resultData.extract)}'
+                data-url='${escapeString(resultData.url)}'
+                data-title='${escapeString(this.__handleBold(resultData.title))}'
+                data-extract='${escapeString(this.__handleBold(resultData.extract))}'
               ></li>
             `;
           }
