@@ -48,7 +48,7 @@ export default define('search-bar', class extends HTMLElement {
       if (this.searchInput.value) document.body.style.paddingTop = '25px';
       else document.body.style.paddingTop = '30vh';
       // Getting results from API
-      const search = await (await fetch(`${config.publicApiURL}search?s=${this.searchInput.value}`)).json();
+      const search = await (await fetch(`${config.publicApiURL}search?s=${encodeURIComponent(this.searchInput.value)}`)).json();
       // Creating a custom event to send search results
       const searchEvent = new CustomEvent('search', {
         detail: this.searchInput.value ? search : null,
