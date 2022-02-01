@@ -1,4 +1,5 @@
 import define from '../../utils/define.js';
+import escapeString from '../../utils/escapeString.js';
 import { globalBus } from '../../utils/events.js';
 
 const template = ({ data }) => /*html*/`
@@ -17,7 +18,11 @@ export default define('result', class extends HTMLLIElement {
   }
 
   __setup() {
-    this.innerHTML = template({ data: this.dataset });
+    this.innerHTML = template({ data: {
+      url: this.dataset.url,
+      title: this.__handleBold(JSON.parse(this.dataset.title)),
+      extract: this.__handleBold(JSON.parse(this.dataset.extract))
+     }});
     this.__events();
   }
 
@@ -39,5 +44,14 @@ export default define('result', class extends HTMLLIElement {
         }
       }
     })
+  }
+
+  __handleBold(input) {
+    let text = '';
+    for (const part of input) {
+      if (part.is_bold) text += `<strong>${escapeString(part.value)}</strong>`;
+      else text += escapeString(part.value);
+    }
+    return text;
   }
 }, { extends: 'li' });
