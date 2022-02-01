@@ -6,6 +6,7 @@
   box-sizing: border-box;
   font-family: var(--regular-font);
   color: var(--dark-color);
+  font-size: var(--default-font-size);
 }
 * {
   margin: 0;

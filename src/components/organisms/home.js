@@ -1,9 +1,9 @@
 import define from '../../utils/define.js';
 
 const template = () => /*html*/`
-  <p>
+  <h1>
     Welcome to mwmbl, the free, open-source and non-profit search engine.
-  </p>
+  </h1>
   <p>
     You can start searching by using the search bar above!
   </p>
