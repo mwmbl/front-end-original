@@ -11,7 +11,7 @@ body {
 
 .brand-title {
   text-align: center;
-  font-weight: 900;
+  font-weight: var(--black-font-weight);
   font-size: 1.2rem;
   margin: 0 15px 10px 15px;
 }
