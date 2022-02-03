@@ -20,6 +20,7 @@ export default define('search-bar', class extends HTMLElement {
   constructor() {
     super();
     this.searchInput = null;
+    this.abortController = new AbortController();
     this.__setup();
   }
 
@@ -55,8 +56,13 @@ export default define('search-bar', class extends HTMLElement {
         document.body.style.paddingTop = '25px';
 
         try {
+          // Abort previous requests
+          this.abortController.abort();
+          this.abortController = new AbortController();
           // Get response from API
-          const response = await fetch(`${config.publicApiURL}search?s=${encodeURIComponent(this.searchInput.value)}`);
+          const response = await fetch(`${config.publicApiURL}search?s=${encodeURIComponent(this.searchInput.value)}`, {
+            signal: this.abortController.signal
+          });
           // Getting results from API
           const search = await (response).json();
           // Creating a custom event to send search results
