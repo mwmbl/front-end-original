@@ -10,6 +10,9 @@
   <title>MWMBL - Search</title>
   <meta name="description" content="The free, open-source and non-profit search engine.">
 
+  <!-- Favicons -->
+  <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml">
+
   <!-- Fonts import -->
   <link rel="preload" href="../assets/fonts/inter/inter.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="../assets/fonts/inter/inter.css"></noscript>
@@ -28,7 +31,10 @@
 </head>
 <body>
   <header class="search-menu">
-    <span class="brand-title">MWMBL</span>
+    <div class="branding">
+      <img class="brand-icon" src="../assets//images/logo.svg">
+      <span class="brand-title">MWMBL</span>
+    </div>
     <mwmbl-search-bar></mwmbl-search-bar>
   </header>
   <main>
