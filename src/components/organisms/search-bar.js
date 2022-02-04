@@ -52,8 +52,9 @@ export default define('search-bar', class extends HTMLElement {
       window.history.replaceState({ path: newURL }, '', newURL);
 
       if (this.searchInput.value) {
-        // Update body padding
+        // Update body padding and switch search menu to compact mode
         document.body.style.paddingTop = '25px';
+        document.querySelector('.search-menu').classList.add('compact');
 
         try {
           // Abort previous requests
@@ -88,8 +89,9 @@ export default define('search-bar', class extends HTMLElement {
         }
       }
       else {
-        // Update body padding
+        // Update body padding and switch search menu to normal mode
         document.body.style.paddingTop = '30vh';
+        document.querySelector('.search-menu').classList.remove('compact');
         
         // Creating a custom event to send empty search value
         const searchEvent = new CustomEvent('search', {

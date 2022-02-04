@@ -9,11 +9,21 @@ body {
   transition: padding 300ms ease;
 }
 
+.branding {
+  display: flex;
+  align-items: center;
+  margin: 25px;
+}
+
 .brand-title {
   text-align: center;
   font-weight: var(--black-font-weight);
-  font-size: 1.2rem;
-  margin: 0 15px 10px 15px;
+  font-size: 1.5rem;
+  margin: 10px 15px 10px 10px;
+}
+
+.brand-icon {
+  height: 2.5rem;
 }
 
 .search-menu {
@@ -28,6 +38,22 @@ body {
   padding: 10px;
   background-color: rgba(248, 248, 248, .9);
   z-index: 10;
+}
+
+.search-menu.compact {
+  flex-direction: row;
+}
+
+.search-menu.compact .branding {
+  margin: 0 25px 0 0;
+}
+
+.search-menu.compact .brand-title {
+  font-size: 1.2rem;
+}
+
+.search-menu.compact .brand-icon {
+  height: 2rem;
 }
 
 mwmbl-search-bar {
@@ -181,9 +207,5 @@ footer {
 @media screen and (min-width:576px) {
   .brand-title {
     margin: 0 25px 0 15px;
-  }
-
-  .search-menu {
-    flex-direction: row;
   }
 }
