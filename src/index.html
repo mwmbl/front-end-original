@@ -11,15 +11,17 @@
   <meta name="description" content="The free, open-source and non-profit search engine.">
 
   <!-- Fonts import -->
-  <link rel="stylesheet" href="../assets/fonts/inter/inter.css">
+  <link rel="preload" href="../assets/fonts/inter/inter.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="../assets/fonts/inter/inter.css"></noscript>
 
-  <!-- CSS Stylesheets -->
+  <!-- CSS Stylesheets (this is critical CSS) -->
   <link rel="stylesheet" type="text/css" href="../assets/css/reset.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/theme.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/global.css">
 
   <!-- Phosphor Icons (https://github.com/phosphor-icons/phosphor-home) -->
-  <script src="https://unpkg.com/phosphor-icons" defer></script>
+  <link rel="preload" href="../assets/fonts/phosphor/icons.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="../assets/fonts/phosphor/icons.css"></noscript>
   
   <!-- Custom Element Polyfill for Safari -->
   <script src="https://unpkg.com/@ungap/custom-elements" type="module"></script>
