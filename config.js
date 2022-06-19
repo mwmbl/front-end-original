@@ -8,7 +8,7 @@
 
 export default {
   componentPrefix: 'mwmbl',
-  publicApiURL: 'https://api.search.mwmbl.org/',
+  publicApiURL: 'https://api.mwmbl.org/',
   searchQueryParam: 'q',
   footerLinks: [
     {
