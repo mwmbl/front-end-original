@@ -61,7 +61,7 @@ export default define('search-bar', class extends HTMLElement {
           this.abortController.abort();
           this.abortController = new AbortController();
           // Get response from API
-          const response = await fetch(`${config.publicApiURL}search/?s=${encodeURIComponent(this.searchInput.value)}`, {
+          const response = await fetch(`${config.publicApiURL}search?s=${encodeURIComponent(this.searchInput.value)}`, {
             signal: this.abortController.signal
           });
           // Getting results from API
