@@ -1,25 +1,26 @@
 import define from '../../utils/define.js';
-import debounce from '../../utils/debounce.js';
 import config from '../../../config.js';
 import { globalBus } from '../../utils/events.js';
 
 const template = () => /*html*/`
-  <div class="search-bar">
+  <form class="search-bar" method="GET" action="/">
     <i class="ph-magnifying-glass-bold"></i>
     <input 
       type='search' 
+      name='search'
       class='search-bar-input' 
       placeholder='Search on mwmbl...' 
       title='Use "CTRL+K" or "/" to focus.'
       autocomplete='off'
     >
-  </div>
+  </form>
 `;
 
 export default define('search-bar', class extends HTMLElement {
   constructor() {
     super();
     this.searchInput = null;
+    this.searchForm = null;
     this.abortController = new AbortController();
     this.__setup();
   }
@@ -27,11 +28,13 @@ export default define('search-bar', class extends HTMLElement {
   __setup() {
     this.innerHTML = template();
     this.searchInput = this.querySelector('input');
+    this.searchForm = this.querySelector('form');
     this.__events();
   }
 
   __events() {
-    this.searchInput.addEventListener('input', debounce(async (e) => {
+    this.searchForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
       // Update page title
       document.title = `MWMBL - ${this.searchInput.value || "Search"}`;
 
@@ -103,7 +106,7 @@ export default define('search-bar', class extends HTMLElement {
         // Dispatch search event throught the global event bus
         globalBus.dispatch(searchEvent);
       }
-    }));
+    });
 
     // Focus search bar when pressing `ctrl + k` or `/`
     document.addEventListener('keydown', (e) => {
