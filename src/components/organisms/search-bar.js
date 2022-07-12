@@ -3,11 +3,10 @@ import config from '../../../config.js';
 import { globalBus } from '../../utils/events.js';
 
 const template = () => /*html*/`
-  <form class="search-bar" method="GET" action="/">
+  <form class="search-bar">
     <i class="ph-magnifying-glass-bold"></i>
     <input 
       type='search' 
-      name='search'
       class='search-bar-input' 
       placeholder='Search on mwmbl...' 
       title='Use "CTRL+K" or "/" to focus.'
