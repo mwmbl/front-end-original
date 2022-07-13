@@ -1,6 +1,9 @@
 import define from '../../utils/define.js';
 import config from '../../../config.js';
 import { globalBus } from '../../utils/events.js';
+import debounce from '../../utils/debounce.js'
+
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion)').matches;
 
 const template = () => /*html*/`
   <form class="search-bar">
@@ -32,7 +35,7 @@ export default define('search-bar', class extends HTMLElement {
   }
 
   __events() {
-    this.searchForm.addEventListener('submit', async (e) => {
+    const handleSubmit = async (e) => {
       e.preventDefault();
       // Update page title
       document.title = `MWMBL - ${this.searchInput.value || "Search"}`;
@@ -105,7 +108,26 @@ export default define('search-bar', class extends HTMLElement {
         // Dispatch search event throught the global event bus
         globalBus.dispatch(searchEvent);
       }
+    };
+
+    /**
+     * Always add the submit event, it makes things feel faster if
+     * someone does not prefer reduced motion and reflexively hits
+     * return once they've finished typing.
+     */
+    this.searchForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      handleSubmit(e);
     });
+
+    /**
+     * Only add the "real time" search behavior when the client does
+     * not prefer reduced motion; this prevents the page from changing
+     * while the user is still typing their query.
+     */
+    if (!prefersReducedMotion) {
+      this.searchInput.addEventListener('input', debounce(handleSubmit, 500))
+    }
 
     // Focus search bar when pressing `ctrl + k` or `/`
     document.addEventListener('keydown', (e) => {
