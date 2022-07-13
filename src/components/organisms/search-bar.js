@@ -35,8 +35,7 @@ export default define('search-bar', class extends HTMLElement {
   }
 
   __events() {
-    const handleSubmit = async (e) => {
-      e.preventDefault();
+    const handleSubmit = async () => {
       // Update page title
       document.title = `MWMBL - ${this.searchInput.value || "Search"}`;
 
@@ -114,6 +113,8 @@ export default define('search-bar', class extends HTMLElement {
      * Always add the submit event, it makes things feel faster if
      * someone does not prefer reduced motion and reflexively hits
      * return once they've finished typing.
+     *
+     * Nota bene: this event is fired automatically by `connectedCallback`.
      */
     this.searchForm.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -157,6 +158,16 @@ export default define('search-bar', class extends HTMLElement {
 
     const searchQuery = new URLSearchParams(document.location.search).get(config.searchQueryParam);
     this.searchInput.value = searchQuery;
-    this.searchInput.dispatchEvent(new Event('input'));
+
+    /**
+     * Fire the submit event. It is always attached to the form, unlike the custom
+     * `input` handler. Need to explicitly set the event to be cancellable so that
+     * `preventDefault` works in the submit handler.
+     *
+     * This has the effect of the page re-evaluating the current search input,
+     * primarily important for actually submitting the query param search pushed
+     * into the input in the lines immediately before this.
+     */
+    this.searchForm.dispatchEvent(new Event('submit', { cancelable: true }));
   }
 });
