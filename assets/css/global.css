@@ -9,6 +9,12 @@ body {
   transition: padding 300ms ease;
 }
 
+@media (prefers-reduced-motion) {
+  body {
+    transition: none;
+  }
+}
+
 .branding {
   display: flex;
   align-items: center;

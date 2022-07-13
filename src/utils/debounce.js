@@ -7,7 +7,7 @@
 export default (callback, timeout = 100) => {
   let timer;
   return (...args) => {
-      clearTimeout(timer);
-      timer = setTimeout(() => { callback.apply(this, args); }, timeout);
+    clearTimeout(timer);
+    timer = setTimeout(() => { callback.apply(this, args); }, timeout);
   };
 }
