@@ -35,7 +35,10 @@ jobs:
             ${{ runner.os }}-node-
    
       - name: Install Parcel 👨🏻‍💻
-        run: npm i parcel -g --prefer-offline --no-audit
+        run: 
+          npm i parcel -g --prefer-offline --no-audit
+          npm i @parcel/transformer-xml --prefer-offline --no-audit
+          npm i @parcel/packager-xml --prefer-offline --no-audit
 
       - name: Run build ⚙️
         run: parcel build src/index.html --no-source-maps --public-url ./
