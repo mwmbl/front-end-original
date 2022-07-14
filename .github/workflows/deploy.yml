@@ -34,14 +34,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
    
-      - name: Install Parcel 👨🏻‍💻
-        run: 
-          npm i parcel -g --prefer-offline --no-audit
-          npm i @parcel/transformer-xml --prefer-offline --no-audit
-          npm i @parcel/packager-xml --prefer-offline --no-audit
+      - name: Install Vite 👨🏻‍💻
+        run: npm i vite -g --prefer-offline --no-audit
 
       - name: Run build ⚙️
-        run: parcel build src/index.html --no-source-maps --public-url ./
+        run: vite build src --outDir ../dist
 
       - name: Deploy to GitHub Pages 🚀
         uses: peaceiris/actions-gh-pages@v3
