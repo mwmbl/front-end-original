@@ -34,91 +34,103 @@ export default define('search-bar', class extends HTMLElement {
     this.__events();
   }
 
-  __events() {
-    const handleSubmit = async () => {
-      // Update page title
-      document.title = `MWMBL - ${this.searchInput.value || "Search"}`;
+  _dispatchSearch({ results = null, error = null }) {
+    const searchEvent = new CustomEvent('search', {
+      detail: {
+        results,
+        error,
+      },
+    });
+    globalBus.dispatch(searchEvent)
+  }
 
-      // Update query params
-      const queryParams = new URLSearchParams(document.location.search);
-      // Sets query param if search value is not empty
-      if (this.searchInput.value) queryParams.set(config.searchQueryParam, this.searchInput.value);
-      else queryParams.delete(config.searchQueryParam);
-      // New URL with query params
-      const newURL = 
-        document.location.protocol 
-        + "//" 
-        + document.location.host 
-        + document.location.pathname 
-        + (this.searchInput.value ? '?' : '')
-        + queryParams.toString();
-      // Replace history state
-      window.history.replaceState({ path: newURL }, '', newURL);
-
-      if (this.searchInput.value) {
-        // Update body padding and switch search menu to compact mode
+  /**
+   * Updates the overall layout of the page.
+   *
+   * `home` centers the search bar on the page.
+   * `compact` raises it to the top and makes room for displaying results.
+   *
+   * @param {'compact' | 'home'} mode
+   * @return {void}
+   */
+  _setDisplayMode(mode) {
+    switch (mode) {
+      case 'compact': {
         document.body.style.paddingTop = '25px';
         document.querySelector('.search-menu').classList.add('compact');
-
-        try {
-          // Abort previous requests
-          this.abortController.abort();
-          this.abortController = new AbortController();
-          // Get response from API
-          const response = await fetch(`${config.publicApiURL}search?s=${encodeURIComponent(this.searchInput.value)}`, {
-            signal: this.abortController.signal
-          });
-          // Getting results from API
-          const search = await (response).json();
-          // Creating a custom event to send search results
-          const searchEvent = new CustomEvent('search', {
-            detail: {
-              results: this.searchInput.value ? search : null,
-              error: null,
-            },
-          });
-          // Dispatch search event throught the global event bus
-          globalBus.dispatch(searchEvent);
-        }
-        catch(error) {
-          // Creating a custom event to send error
-          const searchEvent = new CustomEvent('search', {
-            detail: {
-              results: null,
-              error
-            },
-          });
-          // Dispatch search event throught the global event bus
-          globalBus.dispatch(searchEvent);
-        }
+        break;
       }
-      else {
-        // Update body padding and switch search menu to normal mode
+      case 'home': {
         document.body.style.paddingTop = '30vh';
         document.querySelector('.search-menu').classList.remove('compact');
-        
-        // Creating a custom event to send empty search value
-        const searchEvent = new CustomEvent('search', {
-          detail: {
-            results: null,
-            error: null,
-          },
-        });
-        // Dispatch search event throught the global event bus
-        globalBus.dispatch(searchEvent);
+        break;
       }
-    };
+    }
+  }
 
+  async _executeSearch() {
+    this.abortController.abort();
+    this.abortController = new AbortController();
+    // Get response from API
+    const response = await fetch(`${config.publicApiURL}search?s=${encodeURIComponent(this.searchInput.value)}`, {
+      signal: this.abortController.signal
+    });
+    // Getting results from API
+    const search = await (response).json();
+    return search;
+  }
+
+  _handleSearch = async () => {
+    // Update page title
+    document.title = `MWMBL - ${this.searchInput.value || "Search"}`;
+
+    // Update query params
+    const queryParams = new URLSearchParams(document.location.search);
+    // Sets query param if search value is not empty
+    if (this.searchInput.value) queryParams.set(config.searchQueryParam, this.searchInput.value);
+    else queryParams.delete(config.searchQueryParam);
+    // New URL with query params
+    const newURL = 
+      document.location.protocol 
+      + "//" 
+      + document.location.host 
+      + document.location.pathname 
+      + (this.searchInput.value ? '?' : '')
+      + queryParams.toString();
+    // Replace history state
+    window.history.replaceState({ path: newURL }, '', newURL);
+
+    if (this.searchInput.value) {
+      this._setDisplayMode('compact')
+
+      try {
+        const search = await this._executeSearch()
+        // This is a guess at an explanation
+        // Check the searcInput.value before setting the results to prevent
+        // race condition where the user has cleared the search input after
+        // submitting an original search but before the search results have
+        // come back from the API
+        this._dispatchSearch({ results: this.searchInput.value ? search : null });
+      }
+      catch(error) {
+        this._dispatchSearch({ error })
+      }
+    }
+    else {
+      this._setDisplayMode('home')
+      this._dispatchSearch({ results: null });
+    }
+  }
+
+  __events() {
     /**
      * Always add the submit event, it makes things feel faster if
      * someone does not prefer reduced motion and reflexively hits
      * return once they've finished typing.
-     *
-     * Nota bene: this event is fired automatically by `connectedCallback`.
      */
     this.searchForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      handleSubmit(e);
+      this._handleSearch(e);
     });
 
     /**
@@ -127,7 +139,7 @@ export default define('search-bar', class extends HTMLElement {
      * while the user is still typing their query.
      */
     if (!prefersReducedMotion) {
-      this.searchInput.addEventListener('input', debounce(handleSubmit, 500))
+      this.searchInput.addEventListener('input', debounce(this._handleSearch, 500))
     }
 
     // Focus search bar when pressing `ctrl + k` or `/`
@@ -158,16 +170,11 @@ export default define('search-bar', class extends HTMLElement {
 
     const searchQuery = new URLSearchParams(document.location.search).get(config.searchQueryParam);
     this.searchInput.value = searchQuery;
-
     /**
-     * Fire the submit event. It is always attached to the form, unlike the custom
-     * `input` handler. Need to explicitly set the event to be cancellable so that
-     * `preventDefault` works in the submit handler.
-     *
-     * This has the effect of the page re-evaluating the current search input,
-     * primarily important for actually submitting the query param search pushed
-     * into the input in the lines immediately before this.
+     * Trigger search handling to coordinate the value pulled from the query string
+     * across the rest of the UI and to actually retrieve the results if the search
+     * value is now non-empty.
      */
-    this.searchForm.dispatchEvent(new Event('submit', { cancelable: true }));
+    this._handleSearch();
   }
 });
