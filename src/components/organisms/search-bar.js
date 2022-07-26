@@ -34,7 +34,7 @@ export default define('search-bar', class extends HTMLElement {
     this.__events();
   }
 
-  _dispatchSearch({ results = null, error = null }) {
+  __dispatchSearch({ results = null, error = null }) {
     const searchEvent = new CustomEvent('search', {
       detail: {
         results,
@@ -53,7 +53,7 @@ export default define('search-bar', class extends HTMLElement {
    * @param {'compact' | 'home'} mode
    * @return {void}
    */
-  _setDisplayMode(mode) {
+  __setDisplayMode(mode) {
     switch (mode) {
       case 'compact': {
         document.body.style.paddingTop = '25px';
@@ -68,7 +68,7 @@ export default define('search-bar', class extends HTMLElement {
     }
   }
 
-  async _executeSearch() {
+  async __executeSearch() {
     this.abortController.abort();
     this.abortController = new AbortController();
     // Get response from API
@@ -80,7 +80,7 @@ export default define('search-bar', class extends HTMLElement {
     return search;
   }
 
-  _handleSearch = async () => {
+  __handleSearch = async () => {
     // Update page title
     document.title = `MWMBL - ${this.searchInput.value || "Search"}`;
 
@@ -101,24 +101,24 @@ export default define('search-bar', class extends HTMLElement {
     window.history.replaceState({ path: newURL }, '', newURL);
 
     if (this.searchInput.value) {
-      this._setDisplayMode('compact')
+      this.__setDisplayMode('compact')
 
       try {
-        const search = await this._executeSearch()
+        const search = await this.__executeSearch()
         // This is a guess at an explanation
         // Check the searcInput.value before setting the results to prevent
         // race condition where the user has cleared the search input after
         // submitting an original search but before the search results have
         // come back from the API
-        this._dispatchSearch({ results: this.searchInput.value ? search : null });
+        this.__dispatchSearch({ results: this.searchInput.value ? search : null });
       }
       catch(error) {
-        this._dispatchSearch({ error })
+        this.__dispatchSearch({ error })
       }
     }
     else {
-      this._setDisplayMode('home')
-      this._dispatchSearch({ results: null });
+      this.__setDisplayMode('home')
+      this.__dispatchSearch({ results: null });
     }
   }
 
@@ -130,7 +130,7 @@ export default define('search-bar', class extends HTMLElement {
      */
     this.searchForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      this._handleSearch(e);
+      this.__handleSearch(e);
     });
 
     /**
@@ -139,7 +139,7 @@ export default define('search-bar', class extends HTMLElement {
      * while the user is still typing their query.
      */
     if (!prefersReducedMotion) {
-      this.searchInput.addEventListener('input', debounce(this._handleSearch, 500))
+      this.searchInput.addEventListener('input', debounce(this.__handleSearch, 500))
     }
 
     // Focus search bar when pressing `ctrl + k` or `/`
@@ -175,6 +175,6 @@ export default define('search-bar', class extends HTMLElement {
      * across the rest of the UI and to actually retrieve the results if the search
      * value is now non-empty.
      */
-    this._handleSearch();
+    this.__handleSearch();
   }
 });
