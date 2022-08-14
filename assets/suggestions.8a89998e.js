@@ -1,0 +1,1 @@
+import{c as r}from"./config.d02c906f.js";const s=()=>{const o=decodeURIComponent(document.location.search).replace(/\+/g," ").substr(3);console.log("Search",o);for(const[e,t]of Object.entries(r.commands))if(console.log("Command",e),o.startsWith(e)){const n=t+o.substr(e.length);return window.location.replace(n),!0}return!1};export{s as redirectToSuggestions};
