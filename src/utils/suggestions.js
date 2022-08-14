@@ -6,7 +6,7 @@
 import config from "../../config.js";
 
 const redirectToSuggestions = () => {
-  const search = unescape(document.location.search).replace(/\+/g, ' ').substr(3);
+  const search = decodeURIComponent(document.location.search).replace(/\+/g, ' ').substr(3);
   console.log("Search", search);
   for (const [command, urlTemplate] of Object.entries(config.commands)) {
     console.log("Command", command);
