@@ -35,24 +35,29 @@
   <script src="https://unpkg.com/@ungap/custom-elements" type="module"></script>
 
   <!-- OpenSearch -->
-  <link rel="search" type="application/opensearchdescription+xml" href="/assets/opensearch.18c87b0b.xml" title="MWMBL Search">
-  <script type="module" crossorigin src="/assets/index.352d3fed.js"></script>
-  <link rel="stylesheet" href="/assets/index.fe39d0f8.css">
+  <link rel="search" type="application/opensearchdescription+xml" href="/assets/opensearch.5cd0fb3c.xml" title="MWMBL Search">
+  <script type="module" crossorigin src="/assets/index.e267d04f.js"></script>
+  <link rel="stylesheet" href="/assets/index.ce47a712.css">
 </head>
 
 <body>
-  <header class="search-menu">
-    <div class="branding">
-      <img class="brand-icon" src="/assets/logo.62a84f44.svg" alt="mwmbl logo">
-      <span class="brand-title">MWMBL</span>
-    </div>
-    <mwmbl-search-bar></mwmbl-search-bar>
-  </header>
-  <main>
-    <mwmbl-results></mwmbl-results>
-  </main>
-  <footer is="mwmbl-footer"></footer>
-
+  <mwmbl-app></mwmbl-app>
+  <noscript>
+    <main class="noscript">
+      <img class="brand-icon" src="../assets/images/logo.svg" width="40" height="40" alt="mwmbl logo">
+      <h1>
+        Welcome to mwmbl, the free, open-source and non-profit search engine.
+      </h1>
+      <p>This website requires you to support/enable scripts.</p>
+      <p>
+        More information on
+        <a href="https://github.com/mwmbl/mwmbl" target="__blank">
+          Github
+        </a>
+        .
+      </p>
+    </main>
+  </noscript>
   <!-- Javasript entrypoint -->
   
 </body>
