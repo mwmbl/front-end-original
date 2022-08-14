@@ -8,8 +8,9 @@
 
 
 import entry from "./utils/entry.js";
-entry()
+entry();
 
+import app from './components/app.js';
 import searchBar from "./components/organisms/search-bar.js";
 import results from "./components/organisms/results.js";
 import footer from "./components/organisms/footer.js";

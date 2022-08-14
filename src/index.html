@@ -40,18 +40,23 @@
 </head>
 
 <body>
-  <header class="search-menu">
-    <div class="branding">
-      <img class="brand-icon" src="../assets//images/logo.svg" alt="mwmbl logo">
-      <span class="brand-title">MWMBL</span>
-    </div>
-    <mwmbl-search-bar></mwmbl-search-bar>
-  </header>
-  <main>
-    <mwmbl-results></mwmbl-results>
-  </main>
-  <footer is="mwmbl-footer"></footer>
-
+  <mwmbl-app></mwmbl-app>
+  <noscript>
+    <main class="noscript">
+      <img class="brand-icon" src="../assets/images/logo.svg" alt="mwmbl logo">
+      <h1>
+        Welcome to mwmbl, the free, open-source and non-profit search engine.
+      </h1>
+      <p>This website requires you to support/enable scripts.</p>
+      <p>
+        More information on
+        <a href="https://github.com/mwmbl/mwmbl" target="__blank">
+          Github
+        </a>
+        .
+      </p>
+    </main>
+  </noscript>
   <!-- Javasript entrypoint -->
   <script src="./index.js" type="module"></script>
 </body>
