@@ -215,3 +215,18 @@ footer {
     margin: 0 25px 0 15px;
   }
 }
+
+.noscript {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 25px);
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+a {
+  font-weight: var(--bold-font-weight);
+  color: var(--primary-color);
+  text-decoration: underline;
+}
