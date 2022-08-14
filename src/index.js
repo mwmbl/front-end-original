@@ -7,7 +7,7 @@
  */
 
 
-import entry from "./utils/entry";
+import entry from "./utils/entry.js";
 entry()
 
 import searchBar from "./components/organisms/search-bar.js";

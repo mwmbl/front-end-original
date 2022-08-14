@@ -3,12 +3,13 @@
  */
 
 
-import config from "../../config";
+import config from "../../config.js";
 
 export default () => {
-  const search = unescape(document.location.search);
+  const search = unescape(document.location.search).replace(/\+/g,' ').substr(3);
   console.log("Search", search);
   for (const [command, urlTemplate] of Object.entries(config.commands)) {
+    console.log("Command", command);
     if (search.startsWith(command)) {
       const newUrl = urlTemplate + search.substr(command.length);
       window.location.replace(newUrl);
@@ -16,18 +17,3 @@ export default () => {
     }
   }
 }
-
-//
-// const goString = "?q=go:+";
-// if (search.startsWith(goString)) {
-//   let newURL = "https://" + search.substr(goString.length);
-//   console.log("New URL", newURL);
-//   document.location = newURL;
-// }
-//
-// const googleString = "?q=search:+google.com+";
-// if (search.startsWith(googleString)) {
-//   let newURL = "https://www.google.com/search?q=" + search.substr(googleString.length);
-//   console.log("Google URL", newURL);
-//   document.location = newURL;
-// }

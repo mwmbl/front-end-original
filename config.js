@@ -22,10 +22,8 @@ export default {
       href: 'https://github.com/mwmbl/mwmbl/wiki'
     }
   ],
-  commands: [
-    {
-      'go: ': 'https://',
-      'search: google.com ': 'https://www.google.com/search?q=',
-    }
-  ]
+  commands: {
+    'go: ': 'https://',
+    'search: google.com ': 'https://www.google.com/search?q=',
+  }
 }
