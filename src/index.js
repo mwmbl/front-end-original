@@ -6,11 +6,14 @@
  * util or component files instead.
  */
 
+// Check if a suggestion redirect is needed.
+const { redirectToSuggestions } = await import("./utils/suggestions.js");
+const redirected = redirectToSuggestions();
 
-import entry from "./utils/entry.js";
-entry();
-
-import app from './components/app.js';
-import searchBar from "./components/organisms/search-bar.js";
-import results from "./components/organisms/results.js";
-import footer from "./components/organisms/footer.js";
+if (!redirected) {
+  // Load components only after redirects are checked.
+  import('./components/app.js');
+  import("./components/organisms/search-bar.js");
+  import("./components/organisms/results.js");
+  import("./components/organisms/footer.js");
+}

@@ -5,15 +5,20 @@
 
 import config from "../../config.js";
 
-export default () => {
-  const search = unescape(document.location.search).replace(/\+/g,' ').substr(3);
+const redirectToSuggestions = () => {
+  const search = unescape(document.location.search).replace(/\+/g, ' ').substr(3);
   console.log("Search", search);
   for (const [command, urlTemplate] of Object.entries(config.commands)) {
     console.log("Command", command);
     if (search.startsWith(command)) {
       const newUrl = urlTemplate + search.substr(command.length);
       window.location.replace(newUrl);
-      break;
+      return true;
     }
   }
+  return false;
 }
+
+export {
+  redirectToSuggestions
+};
