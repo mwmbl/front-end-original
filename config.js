@@ -21,5 +21,11 @@ export default {
       icon: 'ph-info-bold',
       href: 'https://github.com/mwmbl/mwmbl/wiki'
     }
+  ],
+  commands: [
+    {
+      'go: ': 'https://',
+      'search: google.com ': 'https://www.google.com/search?q=',
+    }
   ]
 }
