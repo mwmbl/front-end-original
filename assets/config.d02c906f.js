@@ -1,1 +1,0 @@
-const o={componentPrefix:"mwmbl",publicApiURL:"https://api.mwmbl.org/",searchQueryParam:"q",footerLinks:[{name:"Github",icon:"ph-github-logo-bold",href:"https://github.com/mwmbl/mwmbl"},{name:"Wiki",icon:"ph-info-bold",href:"https://github.com/mwmbl/mwmbl/wiki"}],commands:{"go: ":"https://","search: google.com ":"https://www.google.com/search?q="}};export{o as c};
