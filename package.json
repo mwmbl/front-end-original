@@ -1,0 +1,16 @@
+{
+  "name": "front-end",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-legacy": "^2.3.1",
+    "terser": "^5.16.1",
+    "vite": "^3.2.3"
+  }
+}
