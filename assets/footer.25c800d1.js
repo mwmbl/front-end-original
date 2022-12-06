@@ -3,7 +3,7 @@ import{d as s}from"./define.b7078a0a.js";import{c as o}from"./config.d02c906f.js
   <ul class="footer-list">
     ${t.links.map(e=>`
       <li class="footer-item">
-        <a href="${e.href}" class="footer-link" target="__blank">
+        <a href="${e.href}" class="footer-link" target="_blank">
           <i class="${e.icon}"></i>
           <span>${e.name}</span>
         </a>
