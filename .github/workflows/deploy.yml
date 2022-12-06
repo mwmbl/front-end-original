@@ -35,10 +35,10 @@ jobs:
             ${{ runner.os }}-node-
    
       - name: Install Vite 👨🏻‍💻
-        run: npm i vite -g --prefer-offline --no-audit
+        run: npm clean-install --prefer-offline --no-audit
 
       - name: Run build ⚙️
-        run: vite build src --outDir ../dist
+        run: npm run build
 
       - name: Deploy to GitHub Pages 🚀
         uses: peaceiris/actions-gh-pages@v3

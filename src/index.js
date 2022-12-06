@@ -6,14 +6,17 @@
  * util or component files instead.
  */
 
-// Check if a suggestion redirect is needed.
-const { redirectToSuggestions } = await import("./utils/suggestions.js");
-const redirected = redirectToSuggestions();
+// Waiting for top-level await to be better supported.
+(async () => {
+  // Check if a suggestion redirect is needed.
+  const { redirectToSuggestions } = await import("./utils/suggestions.js");
+  const redirected = redirectToSuggestions();
 
-if (!redirected) {
-  // Load components only after redirects are checked.
-  import('./components/app.js');
-  import("./components/organisms/search-bar.js");
-  import("./components/organisms/results.js");
-  import("./components/organisms/footer.js");
-}
+  if (!redirected) {
+    // Load components only after redirects are checked.
+    import('./components/app.js');
+    import("./components/organisms/search-bar.js");
+    import("./components/organisms/results.js");
+    import("./components/organisms/footer.js");
+  }
+})();
