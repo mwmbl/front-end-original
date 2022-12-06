@@ -1,25 +1,32 @@
 # mwmbl-vanilla
 
-A front-end for the mwmbl search engine written in vanilla javascript
+A front-end for the MWMBL search engine written in Vanilla JavaScript.
 
 ## Local Development
 
-To run and build this project you can use [Vite](https://vitejs.dev/) with `npx`.
+This project uses [Vite](https://vitejs.dev/).
+
+As start, you must install initial dependencies:
+```sh
+> npm install
+```
+
+After that, you can continue with further steps.
 
 To run the project in development mode:
 
 ```sh
-> npx vite dev
+> npm run dev
 ```
 
 To build the project:
 
 ```sh
-> npx vite build
+> npm run build
 ```
 
 To preview the project build:
 
 ```
-> npx vite preview
+> npm run preview
 ```
