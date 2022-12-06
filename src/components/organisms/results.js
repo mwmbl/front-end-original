@@ -65,6 +65,7 @@ export default define('results', class extends HTMLElement {
       }
       // Bind HTML to the DOM
       this.results.innerHTML = resultsHTML;
+      $(".results").sortable();
     });
 
     // Focus first element when coming from the search bar
