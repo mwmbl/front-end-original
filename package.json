@@ -1,4 +1,5 @@
 {
+  "name": "front-end",
   "private": true,
   "type": "module",
   "scripts": {
