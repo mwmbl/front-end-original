@@ -35,7 +35,7 @@ jobs:
             ${{ runner.os }}-node-
    
       - name: Install Vite 👨🏻‍💻
-        run: npm install --prefer-offline --no-audit
+        run: npm clean-install --prefer-offline --no-audit
 
       - name: Run build ⚙️
         run: npm run build
