@@ -1,0 +1,1 @@
+System.register(["./config-legacy.967760ef.js"],(function(e,t){"use strict";var n;return{setters:[e=>{n=e.c}],execute:function(){e("d",((e,t,s)=>{const c=`${n.componentPrefix}-${e}`;return customElements.get(c)||customElements.define(c,t,s),c}))}}}));

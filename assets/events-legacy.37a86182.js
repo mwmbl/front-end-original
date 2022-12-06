@@ -1,0 +1,1 @@
+System.register([],(function(e,t){"use strict";return{execute:function(){e("g",new class{constructor(){this.element=document.createElement("div")}on(e,t){this.element.addEventListener(e,t)}dispatch(e){this.element.dispatchEvent(e)}})}}}));
