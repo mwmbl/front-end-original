@@ -1,6 +1,6 @@
-# mwmbl-vanilla
+# Mwmbl front-end
 
-A front-end for the MWMBL search engine written in Vanilla JavaScript.
+A front-end for the mwmbl search engine written in Vanilla JavaScript.
 
 ## Local Development
 
