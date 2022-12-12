@@ -55,8 +55,22 @@ export default define('login', class extends HTMLElement {
   __handleLogin = async () => {
     // Get response from API
     // TODO: make a POST request to the login back end and store the JWT in a cookie
-    const response = await fetch(`${config.publicApiURL}user/login?s=${encodeURIComponent(this.searchInput.value)}`, {
-      signal: this.abortController.signal
-    });
+    const response = await fetch(`${config.publicApiURL}user/login`, {
+        method: 'POST',
+        cache: 'no-cache',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          "username_or_email": this.emailOrUsernameInput.value,
+          "password": this.passwordInput.value,
+        })
+      });
+    if (response.status === 200) {
+      const loginData = await response.json();
+      console.log("Login data", loginData);
+      document.cookie = `jwt=${loginData["jwt"]}; SameSite=Strict`;
+      console.log("Login success");
+    } else {
+      console.log("Login error", response);
+    }
   }
 });
