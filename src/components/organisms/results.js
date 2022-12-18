@@ -17,6 +17,9 @@ export default define('results', class extends HTMLElement {
   constructor() {
     super();
     this.results = null;
+    this.oldIndex = null;
+    this.curating = false;
+    this.resultsData = null;
     this.__setup();
   }
 
@@ -28,6 +31,7 @@ export default define('results', class extends HTMLElement {
 
   __events() {
     globalBus.on('search', (e) => {
+      this.resultsData = null;
       this.results.innerHTML = '';
       let resultsHTML = '';
       if (!e.detail.error) {
@@ -39,18 +43,16 @@ export default define('results', class extends HTMLElement {
         }
         // If the details array has results display them
         else if (e.detail.results.length > 0) {
-          let i = 0;
+          this.resultsData = e.detail.results;
           for(const resultData of e.detail.results) {
             resultsHTML += /*html*/`
               <li
                 is='${result}'
-                data-original-index='${i}'
                 data-url='${escapeString(resultData.url)}'
                 data-title='${escapeString(JSON.stringify(resultData.title))}'
                 data-extract='${escapeString(JSON.stringify(resultData.extract))}'
               ></li>
             `;
-            i += 1;
           }
         }
         // If the details array is empty there is no result
@@ -68,10 +70,14 @@ export default define('results', class extends HTMLElement {
       }
       // Bind HTML to the DOM
       this.results.innerHTML = resultsHTML;
+
+      // Allow the user to re-order search results
       $(".results").sortable({
-        "activate": this.__sortableActivate,
-        "deactivate": this.__sortableDeactivate,
+        "activate": this.__sortableActivate.bind(this),
+        "deactivate": this.__sortableDeactivate.bind(this),
       });
+
+      this.curating = false;
     });
 
     // Focus first element when coming from the search bar
@@ -82,12 +88,37 @@ export default define('results', class extends HTMLElement {
 
   __sortableActivate(event, ui) {
     console.log("Sortable activate", ui);
+    this.__startCurating();
+    this.oldIndex = ui.item.index();
+  }
+
+  __startCurating() {
+    if (!this.curating) {
+      const curationStartEvent = new CustomEvent("curation", {
+        detail: {
+          type: "start",
+          data: {
+            results: this.resultsData,
+          }
+        }
+      });
+      globalBus.dispatch(curationStartEvent);
+      this.curating = true;
+    }
   }
 
   __sortableDeactivate(event, ui) {
     const newIndex = ui.item.index();
-    const oldIndex = parseInt((ui.item)[0].getAttribute("data-original-index"));
-
-    console.log("Sortable deactivate", ui, oldIndex, newIndex);
+    console.log("Sortable deactivate", ui, this.oldIndex, newIndex);
+    const curationMoveEvent = new CustomEvent("curation", {
+      detail: {
+        type: "move",
+        data: {
+          old_index: this.oldIndex,
+          new_index: newIndex,
+        }
+      }
+    });
+    globalBus.dispatch(curationMoveEvent);
   }
 });
