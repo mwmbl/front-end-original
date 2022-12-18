@@ -1,5 +1,5 @@
 import define from '../../utils/define.js';
-import { globalBus } from '../../utils/events.js';
+import {globalBus} from '../../utils/events.js';
 
 // Components
 import result from '../molecules/result.js';
@@ -39,15 +39,18 @@ export default define('results', class extends HTMLElement {
         }
         // If the details array has results display them
         else if (e.detail.results.length > 0) {
+          let i = 0;
           for(const resultData of e.detail.results) {
             resultsHTML += /*html*/`
               <li
-                is='${result}' 
+                is='${result}'
+                data-original-index='${i}'
                 data-url='${escapeString(resultData.url)}'
                 data-title='${escapeString(JSON.stringify(resultData.title))}'
                 data-extract='${escapeString(JSON.stringify(resultData.extract))}'
               ></li>
             `;
+            i += 1;
           }
         }
         // If the details array is empty there is no result
@@ -65,12 +68,26 @@ export default define('results', class extends HTMLElement {
       }
       // Bind HTML to the DOM
       this.results.innerHTML = resultsHTML;
-      $(".results").sortable();
+      $(".results").sortable({
+        "activate": this.__sortableActivate,
+        "deactivate": this.__sortableDeactivate,
+      });
     });
 
     // Focus first element when coming from the search bar
     globalBus.on('focus-result', () => {
       this.results.firstElementChild.firstElementChild.focus();
     })
+  }
+
+  __sortableActivate(event, ui) {
+    console.log("Sortable activate", ui);
+  }
+
+  __sortableDeactivate(event, ui) {
+    const newIndex = ui.item.index();
+    const oldIndex = parseInt((ui.item)[0].getAttribute("data-original-index"));
+
+    console.log("Sortable deactivate", ui, oldIndex, newIndex);
   }
 });

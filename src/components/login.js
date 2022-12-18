@@ -53,8 +53,6 @@ export default define('login', class extends HTMLElement {
   }
 
   __handleLogin = async () => {
-    // Get response from API
-    // TODO: make a POST request to the login back end and store the JWT in a cookie
     const response = await fetch(`${config.publicApiURL}user/login`, {
         method: 'POST',
         cache: 'no-cache',
