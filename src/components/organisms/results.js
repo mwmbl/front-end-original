@@ -88,15 +88,15 @@ export default define('results', class extends HTMLElement {
 
   __sortableActivate(event, ui) {
     console.log("Sortable activate", ui);
-    this.__startCurating();
+    this.__beginCurating();
     this.oldIndex = ui.item.index();
   }
 
-  __startCurating() {
+  __beginCurating() {
     if (!this.curating) {
       const curationStartEvent = new CustomEvent("curation", {
         detail: {
-          type: "start",
+          type: "begin",
           data: {
             results: this.resultsData,
           }
