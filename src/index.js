@@ -19,5 +19,6 @@
     import("./components/organisms/search-bar.js");
     import("./components/organisms/results.js");
     import("./components/organisms/footer.js");
+    import("./components/organisms/save.js");
   }
 })();

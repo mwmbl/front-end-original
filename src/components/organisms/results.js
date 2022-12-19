@@ -99,6 +99,7 @@ export default define('results', class extends HTMLElement {
           type: "begin",
           data: {
             results: this.resultsData,
+            url: document.location,
           }
         }
       });

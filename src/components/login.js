@@ -41,11 +41,6 @@ export default define('login', class extends HTMLElement {
   }
 
   __events() {
-    /**
-     * Always add the submit event, it makes things feel faster if
-     * someone does not prefer reduced motion and reflexively hits
-     * return once they've finished typing.
-     */
     this.loginForm.addEventListener('submit', (e) => {
       e.preventDefault();
       this.__handleLogin(e);

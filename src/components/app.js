@@ -2,6 +2,9 @@ import define from '../utils/define.js';
 
 const template = () => /*html*/`
   <header class="search-menu">
+    <ul>
+      <li is="mwmbl-save"></li>
+    </ul>
     <div class="branding">
       <img class="brand-icon" src="/images/logo.svg" width="40" height="40" alt="mwmbl logo">
       <span class="brand-title">MWMBL</span>

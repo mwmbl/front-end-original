@@ -15,6 +15,7 @@ const template = () => /*html*/`
 export default define('save', class extends HTMLLIElement {
   constructor() {
     super();
+    this.currentCurationId = null;
     this.classList.add('save');
     this.__setup();
   }
@@ -29,7 +30,9 @@ export default define('save', class extends HTMLLIElement {
   __events() {
     globalBus.on('curation', (e) => {
       // We might not be online, or logged in, so save the curation in local storage in case:
+      console.log("Curation event", e);
       this.__setCuration(e.detail);
+      this.__sendToApi();
     });
   }
 
@@ -55,17 +58,50 @@ export default define('save', class extends HTMLLIElement {
   }
 
   async __sendToApi() {
-    while (localStorage.length > 0) {
+    const auth = document.cookie
+      .split('; ')
+      .find((row) => row.startsWith('jwt='))
+      ?.split('=')[1];
+
+    if (!auth) {
+      console.log("No auth");
+      return;
+    }
+
+    if (localStorage.length > 0) {
       const key = this.__getOldestCurationKey();
-      const value = localStorage.getItem(key);
+      const value = JSON.parse(localStorage.getItem(key));
       const url = CURATION_URL + value['type'];
+      const data = value['data'];
+
+      data['auth'] = auth;
+      if (value['type'] !== 'begin') {
+        if (this.currentCurationId === null) {
+          throw ReferenceError("No current curation found");
+        }
+        data['curation_id'] = this.currentCurationId;
+      }
 
       const response = await fetch(url, {
           method: 'POST',
           cache: 'no-cache',
           headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify(value),
+          body: JSON.stringify(data),
         });
+
+      console.log("Save curation API response", response);
+
+      if (response.status === 200) {
+        localStorage.removeItem(key);
+      }
+
+      const responseData = response.json();
+      if (responseData["curation_id"] !== null) {
+        this.currentCurationId = responseData["curation_id"];
+      }
+
+      // There may be more to send, wait a second and see
+      // setTimeout(this.__sendToApi.bind(this), 1000);
     }
 
   }
