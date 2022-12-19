@@ -74,6 +74,7 @@ export default define('save', class extends HTMLLIElement {
       const url = CURATION_URL + value['type'];
       const data = value['data'];
 
+      // TODO: seems we are missing a curation ID in move request
       data['auth'] = auth;
       if (value['type'] !== 'begin') {
         if (this.currentCurationId === null) {

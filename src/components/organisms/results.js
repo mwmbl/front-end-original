@@ -19,7 +19,6 @@ export default define('results', class extends HTMLElement {
     this.results = null;
     this.oldIndex = null;
     this.curating = false;
-    this.resultsData = null;
     this.__setup();
   }
 
@@ -31,7 +30,6 @@ export default define('results', class extends HTMLElement {
 
   __events() {
     globalBus.on('search', (e) => {
-      this.resultsData = null;
       this.results.innerHTML = '';
       let resultsHTML = '';
       if (!e.detail.error) {
@@ -43,7 +41,6 @@ export default define('results', class extends HTMLElement {
         }
         // If the details array has results display them
         else if (e.detail.results.length > 0) {
-          this.resultsData = e.detail.results;
           for(const resultData of e.detail.results) {
             resultsHTML += /*html*/`
               <li
@@ -94,12 +91,31 @@ export default define('results', class extends HTMLElement {
 
   __beginCurating() {
     if (!this.curating) {
-      const curationStartEvent = new CustomEvent("curation", {
+      const resultsElements = document.querySelectorAll('.results .result:not(.ui-sortable-placeholder)');
+      console.log("Results elements", resultsElements);
+      const results = [];
+      for (let resultElement of resultsElements) {
+        console.log("Result element", resultElement);
+        const result = {
+          url: resultElement.querySelector('a').href,
+          title: resultElement.querySelector('.title').innerText,
+          extract: resultElement.querySelector('.extract').innerText
+        }
+        results.push(result);
+      }
+
+      // const results = resultsElements.map(result => ({
+      //   url: result.children[0].href,
+      //   title: result.getElementsByClassName('title')[0].innerText,
+      //   extract: result.getElementsByClassName('extract')[0].innerText,
+      // }));
+
+      const curationStartEvent = new CustomEvent('curation', {
         detail: {
-          type: "begin",
+          type: 'begin',
           data: {
-            results: this.resultsData,
-            url: document.location,
+            url: document.location.href,
+            results: results
           }
         }
       });
@@ -110,10 +126,10 @@ export default define('results', class extends HTMLElement {
 
   __sortableDeactivate(event, ui) {
     const newIndex = ui.item.index();
-    console.log("Sortable deactivate", ui, this.oldIndex, newIndex);
-    const curationMoveEvent = new CustomEvent("curation", {
+    console.log('Sortable deactivate', ui, this.oldIndex, newIndex);
+    const curationMoveEvent = new CustomEvent('curation', {
       detail: {
-        type: "move",
+        type: 'move',
         data: {
           old_index: this.oldIndex,
           new_index: newIndex,
