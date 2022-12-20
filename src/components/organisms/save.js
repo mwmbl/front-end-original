@@ -73,16 +73,20 @@ export default define('save', class extends HTMLLIElement {
       const value = JSON.parse(localStorage.getItem(key));
       console.log("Value", value);
       const url = CURATION_URL + value['type'];
-      const data = value['data'];
 
-      // TODO: seems we are missing a curation ID in move request
-      data['auth'] = auth;
-      if (value['type'] !== 'begin') {
+      let data;
+      if (value['type'] === 'begin') {
+        data = value['data'];
+      } else {
         if (this.currentCurationId === null) {
           throw ReferenceError("No current curation found");
         }
-        data['curation_id'] = this.currentCurationId;
+        data = {
+          curation_id: this.currentCurationId,
+          curation: value['data'],
+        }
       }
+      data['auth'] = auth;
 
       console.log("Data", data);
       const response = await fetch(url, {
