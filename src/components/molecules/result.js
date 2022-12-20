@@ -3,11 +3,20 @@ import escapeString from '../../utils/escapeString.js';
 import { globalBus } from '../../utils/events.js';
 
 const template = ({ data }) => /*html*/`
-  <a href='${data.url}'>
-    <p class='link'>${data.url}</p>
-    <p class='title'>${data.title}</p>
-    <p class='extract'>${data.extract}</p>
-  </a>
+  <div class="result-container">
+    <div class="actions">
+      <button class="action-button action-remove">✕</button>
+      <button class="action-button action-approve">✓</button>
+      <button class="action-button action-add">＋</button>
+    </div>
+    <div class="result-link">
+      <a href='${data.url}'>
+        <p class='link'>${data.url}</p>
+        <p class='title'>${data.title}</p>
+        <p class='extract'>${data.extract}</p>
+      </a>
+    </div>
+  </div>
 `;
 
 export default define('result', class extends HTMLLIElement {

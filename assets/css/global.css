@@ -117,6 +117,10 @@ mwmbl-results, footer {
   padding: 10px;
 }
 
+.result {
+  min-height: 120px;
+}
+
 .result a {
   display: block;
   text-decoration: none;
@@ -229,4 +233,54 @@ a {
   font-weight: var(--bold-font-weight);
   color: var(--primary-color);
   text-decoration: underline;
+}
+
+.result-container {
+  display: flex;
+}
+
+.actions {
+  padding: 20px;
+  opacity: 0%;
+}
+
+.result:hover .actions {
+  opacity: 100%;
+  transition:
+    opacity 200ms ease-in-out;
+}
+
+.action-button {
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  outline: inherit;
+
+  background: darkgrey;
+  box-shadow: 3px 3px 3px lightgrey;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex; /* or inline-flex */
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+  opacity: 70%;
+}
+
+.action-button:hover {
+  opacity: 100%;
+}
+
+.action-remove {
+  margin-top: 0px;
+}
+
+.action-approve {
+  background: lightgreen;
+}
+
+.action-add {
+  margin-bottom: 0px;
 }

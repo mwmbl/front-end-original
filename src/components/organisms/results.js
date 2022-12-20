@@ -104,12 +104,6 @@ export default define('results', class extends HTMLElement {
         results.push(result);
       }
 
-      // const results = resultsElements.map(result => ({
-      //   url: result.children[0].href,
-      //   title: result.getElementsByClassName('title')[0].innerText,
-      //   extract: result.getElementsByClassName('extract')[0].innerText,
-      // }));
-
       const curationStartEvent = new CustomEvent('curation', {
         detail: {
           type: 'begin',
