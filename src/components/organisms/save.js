@@ -71,6 +71,7 @@ export default define('save', class extends HTMLLIElement {
     if (localStorage.length > 0) {
       const key = this.__getOldestCurationKey();
       const value = JSON.parse(localStorage.getItem(key));
+      console.log("Value", value);
       const url = CURATION_URL + value['type'];
       const data = value['data'];
 
@@ -83,6 +84,7 @@ export default define('save', class extends HTMLLIElement {
         data['curation_id'] = this.currentCurationId;
       }
 
+      console.log("Data", data);
       const response = await fetch(url, {
           method: 'POST',
           cache: 'no-cache',
@@ -96,8 +98,9 @@ export default define('save', class extends HTMLLIElement {
         localStorage.removeItem(key);
       }
 
-      const responseData = response.json();
-      if (responseData["curation_id"] !== null) {
+      const responseData = await response.json();
+      console.log("Response data", responseData);
+      if (responseData["curation_id"]) {
         this.currentCurationId = responseData["curation_id"];
       }
 
