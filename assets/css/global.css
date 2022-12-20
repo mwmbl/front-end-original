@@ -239,18 +239,18 @@ a {
   display: flex;
 }
 
-.actions {
+.curation-buttons {
   padding: 20px;
   opacity: 0%;
 }
 
-.result:hover .actions {
+.result:hover .curation-buttons {
   opacity: 100%;
   transition:
     opacity 200ms ease-in-out;
 }
 
-.action-button {
+.curation-button {
   color: inherit;
   border: none;
   padding: 0;
@@ -269,18 +269,14 @@ a {
   opacity: 70%;
 }
 
-.action-button:hover {
+.curation-button:hover {
   opacity: 100%;
 }
 
-.action-remove {
-  margin-top: 0px;
+.curate-delete {
+  margin-top: 0;
 }
 
-.action-approve {
-  background: lightgreen;
-}
-
-.action-add {
-  margin-bottom: 0px;
+.curate-add {
+  margin-bottom: 0;
 }

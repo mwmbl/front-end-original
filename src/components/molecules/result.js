@@ -1,13 +1,14 @@
 import define from '../../utils/define.js';
 import escapeString from '../../utils/escapeString.js';
 import { globalBus } from '../../utils/events.js';
+import deleteButton from "../organisms/delete-button";
 
 const template = ({ data }) => /*html*/`
   <div class="result-container">
-    <div class="actions">
-      <button class="action-button action-remove">✕</button>
-      <button class="action-button action-approve">✓</button>
-      <button class="action-button action-add">＋</button>
+    <div class="curation-buttons">
+      <button class="curation-button curate-delete" is="${deleteButton}">✕</button>
+      <button class="curation-button curate-approve" is="mwmbl-remove-button">✓</button>
+      <button class="curation-button curate-add">＋</button>
     </div>
     <div class="result-link">
       <a href='${data.url}'>

@@ -80,7 +80,9 @@ export default define('results', class extends HTMLElement {
     // Focus first element when coming from the search bar
     globalBus.on('focus-result', () => {
       this.results.firstElementChild.firstElementChild.focus();
-    })
+    });
+
+    globalBus.on('begin-curating-results', this.__beginCurating.bind(this));
   }
 
   __sortableActivate(event, ui) {

@@ -17,6 +17,8 @@ export default define('save', class extends HTMLLIElement {
     super();
     this.currentCurationId = null;
     this.classList.add('save');
+    this.sendId = 0;
+    this.sending = false;
     this.__setup();
   }
 
@@ -37,20 +39,21 @@ export default define('save', class extends HTMLLIElement {
   }
 
   __setCuration(curation) {
-    const key = CURATION_KEY_PREFIX + Date.now()
+    this.sendId += 1;
+    const key = CURATION_KEY_PREFIX + this.sendId;
     localStorage.setItem(key, JSON.stringify(curation));
   }
 
   __getOldestCurationKey() {
-    let oldestTimestamp = Number.MAX_SAFE_INTEGER;
+    let oldestId = Number.MAX_SAFE_INTEGER;
     let oldestKey = null;
     for (let i=0; i<localStorage.length; ++i) {
       const key = localStorage.key(i);
       if (key.startsWith(CURATION_KEY_PREFIX)) {
         const timestamp = parseInt(key.substring(CURATION_KEY_PREFIX.length));
-        if (timestamp < oldestTimestamp) {
+        if (timestamp < oldestId) {
           oldestKey = key;
-          oldestTimestamp = timestamp;
+          oldestId = timestamp;
         }
       }
     }
@@ -58,6 +61,10 @@ export default define('save', class extends HTMLLIElement {
   }
 
   async __sendToApi() {
+    if (this.sending) {
+      return;
+    }
+    this.sending = true;
     const auth = document.cookie
       .split('; ')
       .find((row) => row.startsWith('jwt='))
@@ -109,9 +116,9 @@ export default define('save', class extends HTMLLIElement {
       }
 
       // There may be more to send, wait a second and see
-      // setTimeout(this.__sendToApi.bind(this), 1000);
+      setTimeout(this.__sendToApi.bind(this), 1000);
     }
-
+    this.sending = false;
   }
 }, { extends: 'li' });
 
