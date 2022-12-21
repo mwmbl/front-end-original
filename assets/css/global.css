@@ -241,21 +241,16 @@ a {
 
 .curation-buttons {
   padding: 20px;
-  opacity: 0%;
-}
-
-.result:hover .curation-buttons {
-  opacity: 100%;
-  transition:
-    opacity 200ms ease-in-out;
 }
 
 .curation-button {
+  opacity: 0;
   color: inherit;
   border: none;
   padding: 0;
   font: inherit;
   outline: inherit;
+  cursor: pointer;
 
   background: darkgrey;
   box-shadow: 3px 3px 3px lightgrey;
@@ -265,16 +260,26 @@ a {
   display: flex; /* or inline-flex */
   align-items: center;
   justify-content: center;
-  margin: 10px;
-  opacity: 70%;
+  margin: 10px 0 10px 0;
 }
 
-.curation-button:hover {
+.result:hover .curation-button {
+  opacity: 70%;
+  transition:
+    opacity 200ms ease-in-out;
+}
+
+.result:hover .curation-button:hover {
   opacity: 100%;
 }
 
 .curate-delete {
   margin-top: 0;
+}
+
+.validated {
+  background: lightgreen;
+  opacity: 100%;
 }
 
 .curate-add {
