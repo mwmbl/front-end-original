@@ -17,7 +17,6 @@
     import('./components/app.js');
     import('./components/login.js');
     import("./components/organisms/search-bar.js");
-    import("./components/organisms/delete-button.js");
     import("./components/organisms/results.js");
     import("./components/organisms/footer.js");
     import("./components/organisms/save.js");
