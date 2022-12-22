@@ -1,9 +1,11 @@
 import define from '../utils/define.js';
+import addResult from "./molecules/add-result.js";
+import save from "./organisms/save.js";
 
 const template = () => /*html*/`
   <header class="search-menu">
     <ul>
-      <li is="mwmbl-save"></li>
+      <li is="${save}"></li>
     </ul>
     <div class="branding">
       <img class="brand-icon" src="/images/logo.svg" width="40" height="40" alt="mwmbl logo">
@@ -11,9 +13,16 @@ const template = () => /*html*/`
     </div>
     <mwmbl-search-bar></mwmbl-search-bar>
   </header>
-    <main>
-      <mwmbl-results></mwmbl-results>
-    </main>
+  <main>
+    <mwmbl-results></mwmbl-results>
+  </main>
+  <div class="modal">
+    <form class="modal-content">
+      <span class="close">&times;</span>
+      <input id="add-result" is="${addResult}" placeholder="Enter a URL...">
+      <button>Save</button>
+    </form>
+  </div>
   <footer is="mwmbl-footer"></footer>
 `;
 
