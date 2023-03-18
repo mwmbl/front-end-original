@@ -83,6 +83,21 @@ export default define('results', class extends HTMLElement {
     });
 
     globalBus.on('begin-curating-results', this.__beginCurating.bind(this));
+
+    globalBus.on('add-result', (e) => {
+      console.log("Add result", e);
+      this.__beginCurating();
+      const resultData = e.detail;
+      const resultHTML = /*html*/`
+        <li
+          is='${result}'
+          data-url='${escapeString(resultData.url)}'
+          data-title='${escapeString(JSON.stringify(resultData.title))}'
+          data-extract='${escapeString(JSON.stringify(resultData.extract))}'
+        ></li>
+      `;
+      this.results.insertAdjacentHTML('afterbegin', resultHTML);
+    });
   }
 
   __sortableActivate(event, ui) {

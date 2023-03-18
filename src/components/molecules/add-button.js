@@ -17,12 +17,8 @@ export default define('add-button', class extends HTMLButtonElement {
   __events() {
     this.addEventListener('click', (e) => {
       console.log("Add button");
-
-      const result = this.closest('.result');
-      const resultHTML = /*html*/`
-        <li is='${addResult}'></li>
-      `;
-      result.insertAdjacentHTML("afterend", resultHTML);
+      document.querySelector('.modal').style.display = 'block';
+      document.querySelector('.modal input').focus();
     })
   }
 }, { extends: 'button' });

@@ -16,13 +16,7 @@ const template = () => /*html*/`
   <main>
     <mwmbl-results></mwmbl-results>
   </main>
-  <div class="modal">
-    <form class="modal-content">
-      <span class="close">&times;</span>
-      <input id="add-result" is="${addResult}" placeholder="Enter a URL...">
-      <button>Save</button>
-    </form>
-  </div>
+  <div is="${addResult}"></div>
   <footer is="mwmbl-footer"></footer>
 `;
 
