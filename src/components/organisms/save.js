@@ -30,7 +30,7 @@ export default define('save', class extends HTMLLIElement {
   }
 
   __events() {
-    globalBus.on('curation', (e) => {
+    globalBus.on('save-curation', (e) => {
       // We might not be online, or logged in, so save the curation in local storage in case:
       console.log("Curation event", e);
       this.__setCuration(e.detail);

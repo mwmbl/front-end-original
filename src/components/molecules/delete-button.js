@@ -26,7 +26,7 @@ export default define('delete-button', class extends HTMLButtonElement {
       const beginCuratingEvent = new CustomEvent('begin-curating-results');
       globalBus.dispatch(beginCuratingEvent);
 
-      const curationDeleteEvent = new CustomEvent('curation', {
+      const curationDeleteEvent = new CustomEvent('save-curation', {
         detail: {
           type: 'delete',
           data: {

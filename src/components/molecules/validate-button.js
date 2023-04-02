@@ -28,7 +28,7 @@ export default define('validate-button', class extends HTMLButtonElement {
 
       this.validated = !this.validated
 
-      const curationValidateEvent = new CustomEvent('curation', {
+      const curationValidateEvent = new CustomEvent('save-curation', {
         detail: {
           type: 'validate',
           data: {

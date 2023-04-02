@@ -33,7 +33,7 @@ export default define('results', class extends HTMLElement {
       this.results.innerHTML = '';
       let resultsHTML = '';
       if (!e.detail.error) {
-        // If there is no details the input is empty 
+        // If there is no details the input is empty
         if (!e.detail.results) {
           resultsHTML = /*html*/`
             <li is='${home}'></li>
@@ -108,20 +108,9 @@ export default define('results', class extends HTMLElement {
 
   __beginCurating() {
     if (!this.curating) {
-      const resultsElements = document.querySelectorAll('.results .result:not(.ui-sortable-placeholder)');
-      console.log("Results elements", resultsElements);
-      const results = [];
-      for (let resultElement of resultsElements) {
-        console.log("Result element", resultElement);
-        const result = {
-          url: resultElement.querySelector('a').href,
-          title: resultElement.querySelector('.title').innerText,
-          extract: resultElement.querySelector('.extract').innerText
-        }
-        results.push(result);
-      }
+      const results = this.__getResults();
 
-      const curationStartEvent = new CustomEvent('curation', {
+      const curationStartEvent = new CustomEvent('save-curation', {
         detail: {
           type: 'begin',
           data: {
@@ -135,10 +124,26 @@ export default define('results', class extends HTMLElement {
     }
   }
 
+  __getResults() {
+    const resultsElements = document.querySelectorAll('.results .result:not(.ui-sortable-placeholder)');
+    console.log("Results elements", resultsElements);
+    const results = [];
+    for (let resultElement of resultsElements) {
+      console.log("Result element", resultElement);
+      const result = {
+        url: resultElement.querySelector('a').href,
+        title: resultElement.querySelector('.title').innerText,
+        extract: resultElement.querySelector('.extract').innerText
+      }
+      results.push(result);
+    }
+    return results;
+  }
+
   __sortableDeactivate(event, ui) {
     const newIndex = ui.item.index();
     console.log('Sortable deactivate', ui, this.oldIndex, newIndex);
-    const curationMoveEvent = new CustomEvent('curation', {
+    const curationMoveEvent = new CustomEvent('save-curation', {
       detail: {
         type: 'move',
         data: {
