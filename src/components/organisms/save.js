@@ -81,17 +81,12 @@ export default define('save', class extends HTMLLIElement {
       console.log("Value", value);
       const url = CURATION_URL + value['type'];
 
-      let data;
-      if (value['type'] === 'begin') {
-        data = value['data'];
-      } else {
+      let data = value['data'];
+      if (value.type !== 'begin') {
         if (this.currentCurationId === null) {
           throw ReferenceError("No current curation found");
         }
-        data = {
-          curation_id: this.currentCurationId,
-          curation: value['data'],
-        }
+        data['curation_id'] = this.currentCurationId;
       }
       data['auth'] = auth;
 
@@ -107,6 +102,9 @@ export default define('save', class extends HTMLLIElement {
 
       if (response.status === 200) {
         localStorage.removeItem(key);
+      } else {
+        console.log("Bad response, skipping");
+        return;
       }
 
       const responseData = await response.json();

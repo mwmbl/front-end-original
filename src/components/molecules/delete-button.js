@@ -21,20 +21,15 @@ export default define('delete-button', class extends HTMLButtonElement {
 
       const index = Array.prototype.indexOf.call(parent.children, result);
       console.log("Delete index", index);
-      parent.removeChild(result);
 
-      const beginCuratingEvent = new CustomEvent('begin-curating-results');
-      globalBus.dispatch(beginCuratingEvent);
-
-      const curationDeleteEvent = new CustomEvent('save-curation', {
+      const beginCuratingEvent = new CustomEvent('curate-delete-result', {
         detail: {
-          type: 'delete',
           data: {
             delete_index: index
           }
         }
       });
-      globalBus.dispatch(curationDeleteEvent);
+      globalBus.dispatch(beginCuratingEvent);
     })
   }
 }, { extends: 'button' });

@@ -58,9 +58,10 @@ export default define('add-result', class extends HTMLDivElement {
       const data = await response.json();
       console.log("Data", data);
 
-      const addResultEvent = new CustomEvent('add-result', {detail: data});
+      const addResultEvent = new CustomEvent('curate-add-result', {detail: data});
       globalBus.dispatch(addResultEvent);
     } else {
+      console.log("Bad response", response);
       // TODO
     }
   }

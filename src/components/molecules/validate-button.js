@@ -23,14 +23,10 @@ export default define('validate-button', class extends HTMLButtonElement {
       const index = Array.prototype.indexOf.call(parent.children, result);
       console.log("Validate index", index);
 
-      const beginCuratingEvent = new CustomEvent('begin-curating-results');
-      globalBus.dispatch(beginCuratingEvent);
-
       this.validated = !this.validated
 
-      const curationValidateEvent = new CustomEvent('save-curation', {
+      const curationValidateEvent = new CustomEvent('curate-validate-result', {
         detail: {
-          type: 'validate',
           data: {
             validate_index: index,
             is_validated: this.validated
