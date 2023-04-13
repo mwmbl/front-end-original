@@ -87,10 +87,8 @@ export default define('results', class extends HTMLElement {
       this.__beginCurating.bind(this)();
 
       const children = this.results.getElementsByClassName('result');
-      console.log("Children", children);
       let deleteIndex = e.detail.data.delete_index;
       const child = children[deleteIndex];
-      console.log("Child", child);
       this.results.removeChild(child);
       const newResults = this.__getResults();
 
@@ -112,6 +110,10 @@ export default define('results', class extends HTMLElement {
     globalBus.on('curate-validate-result',  (e) => {
       console.log("Curate validate result event", e);
       this.__beginCurating.bind(this)();
+
+      const children = this.results.getElementsByClassName('result');
+      const validateChild = children[e.detail.data.validate_index];
+      validateChild.querySelector('.curate-approve').toggleValidate();
 
       const newResults = this.__getResults();
 
@@ -177,7 +179,6 @@ export default define('results', class extends HTMLElement {
   __beginCurating() {
     if (!this.curating) {
       const results = this.__getResults();
-      console.log("Results", results);
       const curationStartEvent = new CustomEvent('save-curation', {
         detail: {
           type: 'begin',
@@ -194,17 +195,17 @@ export default define('results', class extends HTMLElement {
 
   __getResults() {
     const resultsElements = document.querySelectorAll('.results .result:not(.ui-sortable-placeholder)');
-    console.log("Results elements", resultsElements);
     const results = [];
     for (let resultElement of resultsElements) {
-      console.log("Result element", resultElement);
       const result = {
         url: resultElement.querySelector('a').href,
         title: resultElement.querySelector('.title').innerText,
-        extract: resultElement.querySelector('.extract').innerText
+        extract: resultElement.querySelector('.extract').innerText,
+        curated: resultElement.querySelector('.curate-approve').isValidated()
       }
       results.push(result);
     }
+    console.log("Results", results);
     return results;
   }
 
