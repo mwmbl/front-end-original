@@ -16,6 +16,7 @@
     // Load components only after redirects are checked.
     import('./components/app.js');
     import('./components/login.js');
+    import('./components/register.js');
     import("./components/organisms/search-bar.js");
     import("./components/organisms/results.js");
     import("./components/organisms/footer.js");

@@ -24,6 +24,7 @@ export default define('add-result', class extends HTMLDivElement {
   __setup() {
     this.innerHTML = template();
     this.__events();
+    this.style.display = 'none';
   }
 
   __events() {
