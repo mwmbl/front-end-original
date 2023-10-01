@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mwmbl Stats</title>
+</head>
+<body>
+  <div>
+    <h1>Number of URLs crawled today: <span id="num-urls"></span></h1>
+  </div>
+
+  <div>
+    <canvas id="urls-by-hour"></canvas>
+  </div>
+
+  <div>
+    <canvas id="urls-by-user"></canvas>
+  </div>
+
+  <div>
+    <canvas id="urls-by-domain"></canvas>
+  </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="./stats.js" type="module"></script>
+</body>
+</html>
