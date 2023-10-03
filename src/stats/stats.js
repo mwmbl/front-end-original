@@ -1,31 +1,35 @@
 import {Chart} from "chart.js/auto";
 
 (async () => {
-
-  const urlsByHourCanvas = document.getElementById('urls-by-hour');
-  const urlsCrawledHourlyChart = new Chart(urlsByHourCanvas, {
-    type: 'line',
-    data: {
-      labels: [...Array(24).keys()],
-      datasets: [{
-        label: "URLs crawled by hour",
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
+  function createChart(elementId, labels, label) {
+    const canvas = document.getElementById(elementId);
+    return new Chart(canvas, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: label,
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
         }
       }
-    }
-  });
+    });
+  }
+
+  const urlsCrawledDailyChart = createChart('urls-by-day', null, "URLs crawled by day");
+  const urlsCrawledHourlyChart = createChart('urls-by-hour', [...Array(24).keys()], "URLs crawled today by hour")
+  const usersCrawledDailyChart = createChart('users-by-day', null, "Number of users crawling by day")
 
   const urlsByUserCanvas = document.getElementById('urls-by-user');
   const byUserChart = new Chart(urlsByUserCanvas, {
     type: 'bar',
     data: {
-      // labels: [...stats.top_users.keys()],
       datasets: [{
         label: "Top users",
         borderWidth: 1
@@ -45,7 +49,6 @@ import {Chart} from "chart.js/auto";
   const byDomainChart = new Chart(urlsByDomainCanvas, {
     type: 'bar',
     data: {
-      // labels: [...stats.top_users.keys()],
       datasets: [{
         label: "Top domains",
         borderWidth: 1
@@ -70,8 +73,18 @@ import {Chart} from "chart.js/auto";
         const urlCountSpan = document.getElementById("num-urls");
         urlCountSpan.innerText = stats.urls_crawled_today;
 
+        const numUsers = Object.values(stats.users_crawled_daily)[Object.keys(stats.users_crawled_daily).length - 1];
+        const userCountSpan = document.getElementById("num-users");
+        userCountSpan.innerText = numUsers;
+
+        usersCrawledDailyChart.data.labels = Object.keys(stats.users_crawled_daily);
+        usersCrawledDailyChart.data.datasets[0].data = Object.values(stats.users_crawled_daily);
+
         urlsCrawledHourlyChart.data.datasets[0].data = stats.urls_crawled_hourly;
         urlsCrawledHourlyChart.update();
+
+        urlsCrawledDailyChart.data.labels = Object.keys(stats.urls_crawled_daily);
+        urlsCrawledDailyChart.data.datasets[0].data = Object.values(stats.urls_crawled_daily);
 
         byUserChart.data.labels = Object.keys(stats.top_users);
         byUserChart.data.datasets[0].data = Object.values(stats.top_users);
