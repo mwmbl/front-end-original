@@ -1,6 +1,8 @@
 import {Chart} from "chart.js/auto";
 
 (async () => {
+  Chart.defaults.font.size = 16;
+
   function createChart(elementId, labels, label) {
     const canvas = document.getElementById(elementId);
     return new Chart(canvas, {
@@ -17,7 +19,8 @@ import {Chart} from "chart.js/auto";
           y: {
             beginAtZero: true
           }
-        }
+        },
+        maintainAspectRatio: false
       }
     });
   }
@@ -33,6 +36,7 @@ import {Chart} from "chart.js/auto";
       datasets: [{
         label: "Top users",
         borderWidth: 1
+        // barThickness: 15
       }]
     },
     options: {
@@ -42,6 +46,7 @@ import {Chart} from "chart.js/auto";
         }
       },
       indexAxis: 'y',
+      maintainAspectRatio: false
     }
   });
 
@@ -61,6 +66,7 @@ import {Chart} from "chart.js/auto";
         }
       },
       indexAxis: 'y',
+      maintainAspectRatio: false
     }
   });
 
@@ -79,20 +85,22 @@ import {Chart} from "chart.js/auto";
 
         usersCrawledDailyChart.data.labels = Object.keys(stats.users_crawled_daily);
         usersCrawledDailyChart.data.datasets[0].data = Object.values(stats.users_crawled_daily);
+        usersCrawledDailyChart.update();
 
         urlsCrawledHourlyChart.data.datasets[0].data = stats.urls_crawled_hourly;
         urlsCrawledHourlyChart.update();
 
         urlsCrawledDailyChart.data.labels = Object.keys(stats.urls_crawled_daily);
         urlsCrawledDailyChart.data.datasets[0].data = Object.values(stats.urls_crawled_daily);
+        urlsCrawledDailyChart.update();
 
         byUserChart.data.labels = Object.keys(stats.top_users);
         byUserChart.data.datasets[0].data = Object.values(stats.top_users);
-        byUserChart.update()
+        byUserChart.update();
 
         byDomainChart.data.labels = Object.keys(stats.top_domains);
         byDomainChart.data.datasets[0].data = Object.values(stats.top_domains);
-        byDomainChart.update()
+        byDomainChart.update();
       })
     });
   }

@@ -1,39 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Mwmbl Stats</title>
+  <meta charset="UTF-8">
+  <title>Mwmbl Stats</title>
+  <link rel="stylesheet" type="text/css" href="stats.css">
 </head>
 <body>
-  <div>
-    <h1>Number of users crawled today: <span id="num-users"></span></h1>
-  </div>
+  <section>
+    <div class="outer" id="users-by-day-info">
+      <div class="info">
+        <h1>Number of users crawled today: <span id="num-users"></span></h1>
+        <div class="wrap">
+          <canvas id="users-by-day"></canvas>
+        </div>
+      </div>
+    </div>
 
-  <div>
-    <canvas id="users-by-day"></canvas>
-  </div>
+    <div class="outer">
+      <div class="info">
+        <h1>Number of URLs crawled today: <span id="num-urls"></span></h1>
+        <div class="wrap">
+          <canvas id="urls-by-day"></canvas>
+        </div>
+      </div>
+    </div>
 
-  <div>
-    <h1>Number of URLs crawled today: <span id="num-urls"></span></h1>
-  </div>
+    <div class="outer">
+      <div class="info">
+        <div class="wrap">
+          <canvas id="urls-by-hour"></canvas>
+        </div>
+      </div>
+    </div>
 
-  <div>
-    <canvas id="urls-by-day"></canvas>
-  </div>
+    <div class="outer tall">
+      <div class="info tall">
+        <div class="wrap tall">
+          <canvas id="urls-by-user"></canvas>
+        </div>
+      </div>
+    </div>
 
-  <div>
-    <canvas id="urls-by-hour"></canvas>
-  </div>
-
-  <div>
-    <canvas id="urls-by-user"></canvas>
-  </div>
-
-  <div>
-    <canvas id="urls-by-domain"></canvas>
-  </div>
-
-
+    <div class="outer tall">
+      <div class="info tall">
+        <div class="wrap tall">
+          <canvas id="urls-by-domain"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
   <script src="./stats.js" type="module"></script>
 </body>
 </html>
