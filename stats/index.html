@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mwmbl Stats</title>
+
+  <!-- Favicons -->
+  <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
+
+  <!-- Fonts import -->
+  <link rel="preload" href="/fonts/inter/inter.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="/fonts/inter/inter.css">
+  </noscript>
+
+  <!-- CSS Stylesheets (this is critical CSS) -->
+  <link rel="stylesheet" type="text/css" href="/css/reset.css">
+  <link rel="stylesheet" type="text/css" href="/css/theme.css">
+  <link rel="stylesheet" type="text/css" href="/css/global.css">
+  
+  <script type="module" crossorigin src="/assets/stats.920a5b09.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/modulepreload-polyfill.c7c6310f.js">
+  <link rel="stylesheet" href="/assets/index.fc0e3c6d.css">
+  <script type="module">try{import.meta.url;import("_").catch(()=>1);}catch(e){}window.__vite_is_modern_browser=true;</script>
+  <script type="module">!function(){if(window.__vite_is_modern_browser)return;console.warn("vite: loading legacy build because dynamic import or import.meta.url is unsupported, syntax error above should be ignored");var e=document.getElementById("vite-legacy-polyfill"),n=document.createElement("script");n.src=e.src,n.onload=function(){System.import(document.getElementById('vite-legacy-entry').getAttribute('data-src'))},document.body.appendChild(n)}();</script>
+</head>
+<body>
+  <section>
+    <div class="info">
+      <h1>Mwmbl Stats</h1>
+      <p>
+        Mwmbl is a <a href="https://matrix.to/#/#mwmbl:matrix.org">community</a> devoted to building a
+        <a href="https://en.wikipedia.org/wiki/Free_and_open-source_software">free</a> search engine. You can try it
+        out <a href="/">here</a> or help us improve the index by
+        <a href="https://en.wikipedia.org/wiki/Web_crawler">crawling</a> the web with our
+        <a href="https://addons.mozilla.org/en-GB/firefox/addon/mwmbl-web-crawler/">Firefox extension</a>
+        or <a href="https://github.com/mwmbl/crawler-script">command line script</a>.
+      </p>
+    </div>
+  </section>
+  <section>
+    <div class="info">
+      <h1>Number of users crawling today: <span id="num-users"></span></h1>
+      <div class="wrap">
+        <canvas id="users-by-day"></canvas>
+      </div>
+    </div>
+    <div class="info">
+      <h1>Number of URLs crawled today: <span id="num-urls"></span></h1>
+      <div class="wrap">
+        <canvas id="urls-by-day"></canvas>
+      </div>
+    </div>
+    <div class="info">
+      <div class="wrap">
+        <canvas id="urls-by-hour"></canvas>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="info tall">
+      <div class="wrap tall">
+        <canvas id="urls-by-user"></canvas>
+      </div>
+    </div>
+    <div class="info tall">
+      <div class="wrap tall">
+        <canvas id="urls-by-domain"></canvas>
+      </div>
+    </div>
+  </section>
+  
+  <script nomodule>!function(){var e=document,t=e.createElement("script");if(!("noModule"in t)&&"onbeforeload"in t){var n=!1;e.addEventListener("beforeload",(function(e){if(e.target===t)n=!0;else if(!e.target.hasAttribute("nomodule")||!n)return;e.preventDefault()}),!0),t.type="module",t.src=".",e.head.appendChild(t),t.remove()}}();</script>
+  <script nomodule crossorigin id="vite-legacy-polyfill" src="/assets/polyfills-legacy.b70fb96a.js"></script>
+  <script nomodule crossorigin id="vite-legacy-entry" data-src="/assets/stats-legacy.a1607931.js">System.import(document.getElementById('vite-legacy-entry').getAttribute('data-src'))</script>
+</body>
+</html>
